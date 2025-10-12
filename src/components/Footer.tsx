@@ -28,8 +28,8 @@ export function Footer() {
             <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
               <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium text-amber-800 dark:text-amber-200"></div>
               <p className="text-sm text-neutral-400 dark:text-amber-500">
-                &copy; {new Date().getFullYear()} Le chêne et ses racines. Tout
-                droit réservé.
+                &copy; {new Date().getFullYear()} Le chêne et ses racines. Tous
+                droits réservés.
               </p>
             </div>
           </ContainerInner>

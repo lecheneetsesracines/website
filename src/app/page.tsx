@@ -136,11 +136,7 @@ function Role({ role }: { role: Role }) {
   return (
     <li className="flex gap-4">
       <div className="relative mt-1 flex h-16 w-16 flex-none items-center justify-center rounded-full ring-1 shadow-md shadow-amber-800/5 ring-amber-900/5 dark:border dark:border-zinc-700/50 dark:bg-amber-800 dark:ring-0">
-        <Image
-          src={role.logo}
-          alt=""
-          className="h-14 w-14 rounded-full"
-        />
+        <Image src={role.logo} alt="" className="h-14 w-14 rounded-full" />
       </div>
       <dl className="flex flex-auto flex-wrap items-center justify-center gap-x-2">
         <dt className="sr-only">Company</dt>
@@ -155,22 +151,22 @@ function Role({ role }: { role: Role }) {
 function Resume() {
   let resume: Array<Role> = [
     {
-      company: 'CAF',
-      title: "Caise d'Allocations Familiales",
+      company: "Caisse d'Allocations Familiales",
+      title: "Caisse d'Allocations Familiales",
       logo: logoCaf,
     },
     {
-      company: 'CAP',
+      company: "Cour d'appel de Paris",
       title: "Cour d'appel de Paris",
       logo: logoCap,
     },
     {
-      company: 'Assurance Maladie',
+      company: 'CPAM',
       title: "Assurance Maladie, Caisse d'Allocations Familiales",
       logo: logoAssurance,
     },
     {
-      company: "Caumunauté d'agglomération de Melun Val de Seine",
+      company: "Communauté d'agglomération de Melun Val de Seine",
       title:
         'Caisse d’Allocations Familiales de Seine-et-Marne, Caisse d’Allocations Familiales',
       logo: logoCamvs,

@@ -130,12 +130,16 @@ export default function Contact() {
                   vendredis de 13h à 18h.
                 </p>
                 <p className="mt-6 text-xl font-semibold text-amber-700 dark:text-amber-300">
-                  Accès Depuis la gare SNCF de Melun :
+                  Accès depuis la gare de Melun :
                 </p>
                 <p className="mt-6 text-lg/8 text-amber-700 dark:text-amber-300">
-                  Bus 3602 arrêt Gambetta
-                  <br />
-                  Bus 3605 arrêt Alsace Lorraine
+                  Bus 3601 / 3604 arrêt Notre-Dame ou 12min en marchant
+                </p>
+                <p className="mt-6 text-xl font-semibold text-amber-700 dark:text-amber-300">
+                  Direction gare de Melun :
+                </p>
+                <p className="mt-6 text-lg/8 text-amber-700 dark:text-amber-300">
+                  Bus 3603 / 3605 arrêt Praslin Université
                 </p>
               </dl>
             </div>

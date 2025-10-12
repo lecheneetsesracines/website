@@ -4,11 +4,12 @@ import { ArticleLayout } from '@/components/ArticleLayout'
 import type { ArticleWithSlug } from '@/lib/articles'
 import { Mail, Phone } from '@/components/SocialIcons'
 import parentalite from './parentalite.webp'
+import parentalite2 from './parentalite-2.webp'
 
 export const metadata = {
   title: 'Parentalité',
   description:
-    "Le soutien à la parentalité est proposé pour soutenir les parents et les familles qui sont en situation de rupture, en difficulté, ou en recherche de soutien.",
+    'Le soutien à la parentalité est proposé pour soutenir les parents et les familles qui sont en situation de rupture, en difficulté, ou en recherche de soutien.',
 }
 
 const article: ArticleWithSlug = {
@@ -34,17 +35,17 @@ export default function Page() {
         parentale.
       </p>
       <p>
-        Des entretiens familiaux pour développer la communication
-        intrafamiliale par l’écoute, la parole ouvrant à l’élaboration et la mise
-        en place de solutions qui améliorent le quotidien des parents et des
-        enfants.
+        Des entretiens familiaux pour développer la communication intrafamiliale
+        par l’écoute, la parole ouvrant à l’élaboration et la mise en place de
+        solutions qui améliorent le quotidien des parents et des enfants.
       </p>
       <Image src={parentalite} alt="Parentalité" />
       <p>
         Nous nous attachons à une écoute sans jugement du parent afin de lui
-        offrir un soutien psychologique le plus adapté à sa situation ainsi qu’un
-        accompagnement personnalisé dans ses fonctions de parents.
+        offrir un soutien psychologique le plus adapté à sa situation ainsi
+        qu’un accompagnement personnalisé dans ses fonctions de parents.
       </p>
+      <Image src={parentalite2} alt="Parentalité" />
       <h2>Demande de rendez-vous :</h2>
       <Link
         className="group -m-1 flex w-fit items-center p-1"
