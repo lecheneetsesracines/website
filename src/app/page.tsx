@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
 import { Mail, Map, Phone } from '@/components/SocialIcons'
+import { getPageContent } from '@/lib/pages'
 import logoAnct from '@/images/logos/anct.jpg'
 import logoAssurance from '@/images/logos/assurance.png'
 import logoCamvs from '@/images/logos/camvs.jpg'
@@ -105,7 +106,19 @@ function SocialLink({
   )
 }
 
-function ContactInfo() {
+interface ContactInfoData {
+  heading: string
+  phone: {
+    label: string
+    href: string
+  }
+  email: {
+    label: string
+    href: string
+  }
+}
+
+function ContactInfo({ data }: { data: ContactInfoData }) {
   return (
     <form
       action="/thank-you"
@@ -113,13 +126,31 @@ function ContactInfo() {
     >
       <h2 className="flex text-sm font-semibold text-amber-900 dark:text-amber-100">
         <MailIcon className="h-6 w-6 flex-none" />
-        <span className="ml-3">Pour nous contacter</span>
+        <span className="ml-3">{data.heading}</span>
       </h2>
       <p className="mt-2 text-sm text-amber-700 dark:text-amber-400">
-        06 95 60 52 21
+        {data.phone.href ? (
+          <a
+            href={data.phone.href}
+            className="hover:text-amber-900 dark:hover:text-white"
+          >
+            {data.phone.label}
+          </a>
+        ) : (
+          data.phone.label
+        )}
         <br />
         <span className="text-sm text-amber-700 dark:text-amber-400">
-          lechene77familles@gmail.com
+          {data.email.href ? (
+            <a
+              href={data.email.href}
+              className="hover:text-amber-900 dark:hover:text-white"
+            >
+              {data.email.label}
+            </a>
+          ) : (
+            data.email.label
+          )}
         </span>
       </p>
     </form>
@@ -148,7 +179,7 @@ function Role({ role }: { role: Role }) {
   )
 }
 
-function Resume() {
+function Resume({ intro }: { intro: string }) {
   let resume: Array<Role> = [
     {
       company: "Caisse d'Allocations Familiales",
@@ -206,10 +237,7 @@ function Resume() {
           <BriefcaseIcon className="h-6 w-6 flex-none" />
           <span className="ml-3">Nos financeurs</span>
         </h2>
-        <span className="text-amber-900/60">
-          Tous nos services sont non payants et financés par les partenaires
-          suivants :
-        </span>
+        <span className="text-amber-900/60">{intro}</span>
       </div>
       <ol className="mt-6 h-96 space-y-4 overflow-y-auto">
         {resume.map((role, roleIndex) => (
@@ -248,31 +276,57 @@ function Photos() {
 }
 
 export default async function Home() {
-  let articles = await getAllArticles()
+  let [articles, homePage] = await Promise.all([
+    getAllArticles(),
+    getPageContent('home'),
+  ])
+
+  if (!homePage) {
+    throw new Error('Missing home page content. Expected content/pages/home.md.')
+  }
+
+  let {
+    heroTitle,
+    heroDescription,
+    contactHeading,
+    contactPhoneLabel,
+    contactPhoneHref,
+    contactEmailLabel,
+    contactEmailHref,
+    financeursIntro,
+  } = homePage.data as Record<string, string | undefined>
+
+  let contactInfo: ContactInfoData = {
+    heading: contactHeading || 'Pour nous contacter',
+    phone: {
+      label: contactPhoneLabel || '06 95 60 52 21',
+      href: contactPhoneHref || 'tel:06-95-60-52-21',
+    },
+    email: {
+      label: contactEmailLabel || 'lechene77familles@gmail.com',
+      href: contactEmailHref || 'mailto:lechene77familles@gmail.com',
+    },
+  }
 
   return (
     <>
       <Container className="mt-20">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-amber-800 sm:text-5xl dark:text-amber-100">
-            LE CHÊNE ET SES RACINES
+            {heroTitle || 'LE CHÊNE ET SES RACINES'}
           </h1>
           <p className="mt-6 text-base text-amber-700 dark:text-amber-400">
-            Association dédiée au soutien des familles, nous offrons un cadre
-            bienveillant et sécurisé pour accompagner les parents et les enfants
-            dans la reconstruction de leurs liens. Notre équipe
-            pluridisciplinaire est à l’écoute de chacun, avec pour objectif de
-            favoriser l’apaisement, la confiance et l’autonomie dans le respect
-            de chaque histoire.
+            {heroDescription ||
+              "Association dédiée au soutien des familles, nous offrons un cadre bienveillant et sécurisé pour accompagner les parents et les enfants dans la reconstruction de leurs liens. Notre équipe pluridisciplinaire est à l’écoute de chacun, avec pour objectif de favoriser l’apaisement, la confiance et l’autonomie dans le respect de chaque histoire."}
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
-              href="tel:06-95-60-52-21"
+              href={contactInfo.phone.href || 'tel:06-95-60-52-21'}
               aria-label="Appellez-nous"
               icon={Phone}
             />
             <SocialLink
-              href="mailto:lechene77familles@gmail.com"
+              href={contactInfo.email.href || 'mailto:lechene77familles@gmail.com'}
               aria-label="Envoyer nous un mail"
               icon={Mail}
             />
@@ -294,8 +348,8 @@ export default async function Home() {
             ))}
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
-            <ContactInfo />
-            <Resume />
+            <ContactInfo data={contactInfo} />
+            <Resume intro={financeursIntro || 'Tous nos services sont non payants et financés par les partenaires suivants :'} />
           </div>
         </div>
       </Container>

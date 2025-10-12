@@ -1,4 +1,8 @@
-'use client'
+import type {
+  ComponentPropsWithoutRef,
+  ComponentType,
+  ReactNode,
+} from 'react'
 
 import { Container } from '@/components/Container'
 import {
@@ -8,7 +12,150 @@ import {
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 
-export default function Contact() {
+import { getPageContent } from '@/lib/pages'
+import { ContactForm } from './ContactForm'
+
+interface ContactLink {
+  label?: string
+  href?: string
+}
+
+interface ContactInfoBlock {
+  heading?: string
+  body?: string
+}
+
+interface ContactContent {
+  title: string
+  address?: ContactLink
+  phone?: ContactLink
+  email?: ContactLink
+  infoBlocks: ContactInfoBlock[]
+  mapEmbedUrl?: string
+}
+
+function parseContactContent(data: Record<string, unknown>): ContactContent {
+  const toLink = (entry: unknown): ContactLink | undefined => {
+    if (!entry || typeof entry !== 'object') {
+      return undefined
+    }
+
+    const { label, href } = entry as { label?: unknown; href?: unknown }
+
+    return {
+      label: typeof label === 'string' ? label : undefined,
+      href: typeof href === 'string' ? href : undefined,
+    }
+  }
+
+  const infoBlocksRaw = Array.isArray(data.infoBlocks)
+    ? (data.infoBlocks as unknown[])
+    : []
+
+  const infoBlocks: ContactInfoBlock[] = infoBlocksRaw
+    .map((block) => {
+      if (!block || typeof block !== 'object') {
+        return null
+      }
+
+      const { heading, body } = block as { heading?: unknown; body?: unknown }
+
+      return {
+        heading: typeof heading === 'string' ? heading : undefined,
+        body: typeof body === 'string' ? body : undefined,
+      }
+    })
+    .filter(Boolean) as ContactInfoBlock[]
+
+  if (infoBlocks.length === 0) {
+    infoBlocks.push({
+      heading: 'Informations de contact :',
+    })
+  }
+
+  return {
+    title:
+      typeof data.title === 'string' && data.title.length > 0
+        ? data.title
+        : 'Contactez-nous',
+    address: toLink(data.address),
+    phone: toLink(data.phone),
+    email: toLink(data.email),
+    infoBlocks,
+    mapEmbedUrl:
+      typeof data.mapEmbedUrl === 'string' ? data.mapEmbedUrl : undefined,
+  }
+}
+
+function Address({ address }: { address?: ContactLink }) {
+  if (!address?.label) {
+    return null
+  }
+
+  const lines = address.label.split(/\r?\n/)
+
+  return (
+    <dd>
+      {address.href ? (
+        <Link
+          className="hover:text-amber-900 dark:hover:text-white"
+          href={address.href}
+        >
+          {lines.map((line, index) => (
+            <span key={line + index}>
+              {line}
+              {index < lines.length - 1 ? <br /> : null}
+            </span>
+          ))}
+        </Link>
+      ) : (
+        lines.map((line, index) => (
+          <span key={line + index}>
+            {line}
+            {index < lines.length - 1 ? <br /> : null}
+          </span>
+        ))
+      )}
+    </dd>
+  )
+}
+
+function ContactLinkItem({
+  icon: Icon,
+  children,
+}: {
+  icon: ComponentType<ComponentPropsWithoutRef<'svg'>>
+  children: ReactNode
+}) {
+  return (
+    <div className="flex gap-x-4">
+      <dt className="flex-none">
+        <Icon
+          aria-hidden="true"
+          className="h-7 w-6 text-amber-400 dark:text-amber-400"
+        />
+      </dt>
+      {children}
+    </div>
+  )
+}
+
+export const metadata = {
+  title: 'Contact',
+  description: 'Toutes les informations pour contacter Le chêne et ses racines.',
+}
+
+export default async function Contact() {
+  const page = await getPageContent('contact')
+
+  if (!page) {
+    throw new Error(
+      'Contenu de la page contact introuvable. Ajoutez content/pages/contact.md.',
+    )
+  }
+
+  const content = parseContactContent(page.data)
+
   return (
     <Container className="mt-9">
       <div className="relative isolate bg-white dark:bg-amber-900">
@@ -54,235 +201,85 @@ export default function Contact() {
                 </svg>
               </div>
               <h2 className="text-4xl font-semibold tracking-tight text-pretty text-amber-900 sm:text-5xl dark:text-white">
-                Contactez-nous
+                {content.title}
               </h2>
               <dl className="mt-10 space-y-4 text-base/7 text-amber-700 dark:text-amber-300">
-                <p className="mt-6 text-xl font-semibold text-amber-700 dark:text-amber-300">
-                  Informations de contact :
-                </p>
-                <div className="flex gap-x-4">
-                  <dt className="flex-none">
-                    <span className="sr-only">Address</span>
-                    <BuildingOffice2Icon
-                      aria-hidden="true"
-                      className="h-7 w-6 text-amber-400 dark:text-amber-400"
-                    />
-                  </dt>
-                  <dd>
-                    <Link
-                      className="hover:text-amber-900 dark:hover:text-white"
-                      href="https://www.google.com/maps?rlz=1C5CHFA_enFR977FR977&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIICAEQRRgnGDsyDAgCECMYJxiABBiKBTINCAMQLhivARjHARiABDIKCAQQABiABBiiBDIHCAUQABjvBTIKCAYQABiABBiiBDIGCAcQRRg80gEHMjEzajBqN6gCALACAA&um=1&ie=UTF-8&fb=1&gl=fr&sa=X&geocode=KaEvb0Gc-uVHMVYUQ6j61y9N&daddr=5+Pl.+Praslin,+77000+Melun"
-                    >
-                      5 Place Praslin
-                      <br />
-                      77000 Melun
-                    </Link>
-                  </dd>
-                </div>
-                <div className="flex gap-x-4">
-                  <dt className="flex-none">
-                    <span className="sr-only">Telephone</span>
-                    <PhoneIcon
-                      aria-hidden="true"
-                      className="h-7 w-6 text-amber-400 dark:text-amber-400"
-                    />
-                  </dt>
-                  <dd>
-                    <Link
-                      href="tel:+33 (0)6 95 60 52 21"
-                      className="hover:text-amber-900 dark:hover:text-white"
-                    >
-                      +33 (0)6 95 60 52 21
-                    </Link>
-                  </dd>
-                </div>
-                <div className="flex gap-x-4">
-                  <dt className="flex-none">
-                    <span className="sr-only">Email</span>
-                    <EnvelopeIcon
-                      aria-hidden="true"
-                      className="h-7 w-6 text-amber-400 dark:text-amber-400"
-                    />
-                  </dt>
-                  <dd>
-                    <Link
-                      href="mailto:lechene77familles@gmail.com"
-                      className="hover:text-amber-900 dark:hover:text-white"
-                    >
-                      lechene77familles@gmail.com
-                    </Link>
-                  </dd>
-                </div>
-                <p className="mt-6 text-xl font-semibold text-amber-700 dark:text-amber-300">
-                  Horaires d’ouverture au public :
-                </p>
-                <p className="mt-6 text-lg/8 text-amber-700 dark:text-amber-300">
-                  les mardis de 17h à 20h
-                  <br />
-                  les mercredis de 9h à 18h
-                  <br />
-                  les vendredis de 17h à 20h
-                  <br />
-                  les samedis de 9h à 18h
-                </p>
-                <p className="mt-6 text-lg/8 text-amber-700 dark:text-amber-300">
-                  Le secretariat est ouvert les lundis, mardis, jeudis et
-                  vendredis de 13h à 18h.
-                </p>
-                <p className="mt-6 text-xl font-semibold text-amber-700 dark:text-amber-300">
-                  Accès depuis la gare de Melun :
-                </p>
-                <p className="mt-6 text-lg/8 text-amber-700 dark:text-amber-300">
-                  Bus 3601 / 3604 arrêt Notre-Dame ou 12min en marchant
-                </p>
-                <p className="mt-6 text-xl font-semibold text-amber-700 dark:text-amber-300">
-                  Direction gare de Melun :
-                </p>
-                <p className="mt-6 text-lg/8 text-amber-700 dark:text-amber-300">
-                  Bus 3603 / 3605 arrêt Praslin Université
-                </p>
+                {content.infoBlocks.map((block, index) => {
+                  const key = `${block.heading ?? 'block'}-${index}`
+                  const bodyValue = block.body?.trim()
+                  const body = bodyValue ? bodyValue.split(/\r?\n/) : []
+
+                  if (index === 0) {
+                    return (
+                      <div key={key} className="space-y-4">
+                        {block.heading ? (
+                          <p className="mt-6 text-xl font-semibold text-amber-700 dark:text-amber-300">
+                            {block.heading}
+                          </p>
+                        ) : null}
+                        <ContactLinkItem icon={BuildingOffice2Icon}>
+                          <Address address={content.address} />
+                        </ContactLinkItem>
+                        <ContactLinkItem icon={PhoneIcon}>
+                          <dd>
+                            {content.phone?.href ? (
+                              <Link
+                                href={content.phone.href}
+                                className="hover:text-amber-900 dark:hover:text-white"
+                              >
+                                {content.phone.label}
+                              </Link>
+                            ) : (
+                              content.phone?.label
+                            )}
+                          </dd>
+                        </ContactLinkItem>
+                        <ContactLinkItem icon={EnvelopeIcon}>
+                          <dd>
+                            {content.email?.href ? (
+                              <Link
+                                href={content.email.href}
+                                className="hover:text-amber-900 dark:hover:text-white"
+                              >
+                                {content.email.label}
+                              </Link>
+                            ) : (
+                              content.email?.label
+                            )}
+                          </dd>
+                        </ContactLinkItem>
+                      </div>
+                    )
+                  }
+
+                  const HeadingTag = block.heading ? 'p' : null
+                  return (
+                    <div key={key}>
+                      {HeadingTag ? (
+                        <p className="mt-6 text-xl font-semibold text-amber-700 dark:text-amber-300">
+                          {block.heading}
+                        </p>
+                      ) : null}
+                      {body.length > 0 ? (
+                        <p className="mt-6 text-lg/8 text-amber-700 dark:text-amber-300">
+                          {body.map((line, lineIndex) => (
+                            <span key={`${key}-line-${lineIndex}`}>
+                              {line}
+                              {lineIndex < body.length - 1 ? <br /> : null}
+                            </span>
+                          ))}
+                        </p>
+                      ) : null}
+                    </div>
+                  )
+                })}
               </dl>
             </div>
           </div>
-          <form
-            action="#"
-            method="POST"
-            className="px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48"
-            onSubmit={(e) => {
-              e.preventDefault()
-              const formData = new FormData(e.currentTarget)
-              const firstName = formData.get('first-name') || ''
-              const lastName = formData.get('last-name') || ''
-              const email = formData.get('email') || ''
-              const phone = formData.get('phone-number') || ''
-              const message = formData.get('message') || ''
-
-              const subject = encodeURIComponent(
-                `Demande de contact - ${firstName} ${lastName}`,
-              )
-              const body = encodeURIComponent(`Bonjour,
-
-Voici mes informations de contact :
-
-Prénom : ${firstName}
-Nom : ${lastName}
-Email : ${email}
-Téléphone : ${phone}
-
-Message :
-${message}
-
-Cordialement,
-${firstName} ${lastName}`)
-
-              window.location.href = `mailto:lechene77familles@gmail.com?subject=${subject}&body=${body}`
-            }}
-          >
-            <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
-              <iframe
-                className="mb-9 w-full rounded-lg border-0 shadow-sm dark:border-green-700"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2641.8169636297253!2d2.655250877706947!3d48.53673937129036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e5fa9c416f2fa1%3A0x4d2fd7faa8431456!2sLE%20CH%C3%8ANE%20ET%20SES%20RACINES!5e0!3m2!1sfr!2sfr!4v1746603563142!5m2!1sfr!2sfr"
-                width="400"
-                height="250"
-                loading="lazy"
-              />
-              <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="first-name"
-                    className="block text-sm/6 font-semibold text-amber-900 dark:text-white"
-                  >
-                    Prénom
-                  </label>
-                  <div className="mt-2.5">
-                    <input
-                      id="first-name"
-                      name="first-name"
-                      type="text"
-                      autoComplete="given-name"
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-amber-900 outline-1 -outline-offset-1 outline-zinc-300 placeholder:text-amber-400 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-amber-500"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label
-                    htmlFor="last-name"
-                    className="block text-sm/6 font-semibold text-amber-900 dark:text-white"
-                  >
-                    Nom de famille
-                  </label>
-                  <div className="mt-2.5">
-                    <input
-                      id="last-name"
-                      name="last-name"
-                      type="text"
-                      autoComplete="family-name"
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-amber-900 outline-1 -outline-offset-1 outline-zinc-300 placeholder:text-amber-400 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-amber-500"
-                    />
-                  </div>
-                </div>
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm/6 font-semibold text-amber-900 dark:text-white"
-                  >
-                    Email
-                  </label>
-                  <div className="mt-2.5">
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-amber-900 outline-1 -outline-offset-1 outline-zinc-300 placeholder:text-amber-400 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-amber-500"
-                    />
-                  </div>
-                </div>
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="phone-number"
-                    className="block text-sm/6 font-semibold text-amber-900 dark:text-white"
-                  >
-                    Numéro de téléphone
-                  </label>
-                  <div className="mt-2.5">
-                    <input
-                      id="phone-number"
-                      name="phone-number"
-                      type="tel"
-                      autoComplete="tel"
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-amber-900 outline-1 -outline-offset-1 outline-zinc-300 placeholder:text-amber-400 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-amber-500"
-                    />
-                  </div>
-                </div>
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="message"
-                    className="block text-sm/6 font-semibold text-amber-900 dark:text-white"
-                  >
-                    Message
-                  </label>
-                  <div className="mt-2.5">
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={4}
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-amber-900 outline-1 -outline-offset-1 outline-zinc-300 placeholder:text-amber-400 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-amber-500"
-                      defaultValue={''}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="mt-8 flex justify-end">
-                <button
-                  type="submit"
-                  className="rounded-md bg-teal-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-green-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 dark:bg-green-600 dark:hover:bg-green-700 dark:focus-visible:outline-green-500"
-                >
-                  Envoyer
-                </button>
-              </div>
-            </div>
-          </form>
+          <ContactForm
+            emailHref={content.email?.href || 'mailto:lechene77familles@gmail.com'}
+            mapEmbedUrl={content.mapEmbedUrl}
+          />
         </div>
       </div>
     </Container>

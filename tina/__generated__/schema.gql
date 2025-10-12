@@ -56,10 +56,13 @@ type Query {
   document(collection: String, relativePath: String): DocumentNode!
   section(relativePath: String): Section!
   sectionConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: SectionFilter): SectionConnection!
+  page(relativePath: String): Page!
+  pageConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PageFilter): PageConnection!
 }
 
 input DocumentFilter {
   section: SectionFilter
+  page: PageFilter
 }
 
 type DocumentConnectionEdges {
@@ -85,7 +88,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Section | Folder
+union DocumentNode = Section | PageHome | PageContact | PageEquipe | Folder
 
 type SectionGallery {
   imageId: String!
@@ -140,6 +143,152 @@ type SectionConnection implements Connection {
   edges: [SectionConnectionEdges]
 }
 
+type PageHome implements Node & Document {
+  slug: String!
+  title: String!
+  heroTitle: String!
+  heroDescription: String
+  contactHeading: String
+  contactPhoneLabel: String
+  contactPhoneHref: String
+  contactEmailLabel: String
+  contactEmailHref: String
+  financeursIntro: String
+  body: JSON
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+type PageContactAddress {
+  label: String
+  href: String
+}
+
+type PageContactPhone {
+  label: String
+  href: String
+}
+
+type PageContactEmail {
+  label: String
+  href: String
+}
+
+type PageContactInfoBlocks {
+  heading: String
+  body: String
+}
+
+type PageContact implements Node & Document {
+  slug: String!
+  title: String!
+  address: PageContactAddress
+  phone: PageContactPhone
+  email: PageContactEmail
+  infoBlocks: [PageContactInfoBlocks]
+  mapEmbedUrl: String
+  body: JSON
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+type PageEquipePeople {
+  name: String!
+  role: String
+  bio: String
+}
+
+type PageEquipe implements Node & Document {
+  slug: String!
+  title: String!
+  description: String
+  people: [PageEquipePeople]
+  body: JSON
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+union Page = PageHome | PageContact | PageEquipe
+
+input PageHomeFilter {
+  slug: StringFilter
+  title: StringFilter
+  heroTitle: StringFilter
+  heroDescription: StringFilter
+  contactHeading: StringFilter
+  contactPhoneLabel: StringFilter
+  contactPhoneHref: StringFilter
+  contactEmailLabel: StringFilter
+  contactEmailHref: StringFilter
+  financeursIntro: StringFilter
+  body: RichTextFilter
+}
+
+input PageContactAddressFilter {
+  label: StringFilter
+  href: StringFilter
+}
+
+input PageContactPhoneFilter {
+  label: StringFilter
+  href: StringFilter
+}
+
+input PageContactEmailFilter {
+  label: StringFilter
+  href: StringFilter
+}
+
+input PageContactInfoBlocksFilter {
+  heading: StringFilter
+  body: StringFilter
+}
+
+input PageContactFilter {
+  slug: StringFilter
+  title: StringFilter
+  address: PageContactAddressFilter
+  phone: PageContactPhoneFilter
+  email: PageContactEmailFilter
+  infoBlocks: PageContactInfoBlocksFilter
+  mapEmbedUrl: StringFilter
+  body: RichTextFilter
+}
+
+input PageEquipePeopleFilter {
+  name: StringFilter
+  role: StringFilter
+  bio: StringFilter
+}
+
+input PageEquipeFilter {
+  slug: StringFilter
+  title: StringFilter
+  description: StringFilter
+  people: PageEquipePeopleFilter
+  body: RichTextFilter
+}
+
+input PageFilter {
+  home: PageHomeFilter
+  contact: PageContactFilter
+  equipe: PageEquipeFilter
+}
+
+type PageConnectionEdges {
+  cursor: String!
+  node: Page
+}
+
+type PageConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [PageConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -148,15 +297,19 @@ type Mutation {
   createFolder(collection: String, relativePath: String!): DocumentNode!
   updateSection(relativePath: String!, params: SectionMutation!): Section!
   createSection(relativePath: String!, params: SectionMutation!): Section!
+  updatePage(relativePath: String!, params: PageMutation!): Page!
+  createPage(relativePath: String!, params: PageMutation!): Page!
 }
 
 input DocumentUpdateMutation {
   section: SectionMutation
+  page: PageMutation
   relativePath: String
 }
 
 input DocumentMutation {
   section: SectionMutation
+  page: PageMutation
 }
 
 input SectionGalleryMutation {
@@ -170,6 +323,71 @@ input SectionMutation {
   description: String
   gallery: [SectionGalleryMutation]
   body: JSON
+}
+
+input PageHomeMutation {
+  slug: String
+  title: String
+  heroTitle: String
+  heroDescription: String
+  contactHeading: String
+  contactPhoneLabel: String
+  contactPhoneHref: String
+  contactEmailLabel: String
+  contactEmailHref: String
+  financeursIntro: String
+  body: JSON
+}
+
+input PageContactAddressMutation {
+  label: String
+  href: String
+}
+
+input PageContactPhoneMutation {
+  label: String
+  href: String
+}
+
+input PageContactEmailMutation {
+  label: String
+  href: String
+}
+
+input PageContactInfoBlocksMutation {
+  heading: String
+  body: String
+}
+
+input PageContactMutation {
+  slug: String
+  title: String
+  address: PageContactAddressMutation
+  phone: PageContactPhoneMutation
+  email: PageContactEmailMutation
+  infoBlocks: [PageContactInfoBlocksMutation]
+  mapEmbedUrl: String
+  body: JSON
+}
+
+input PageEquipePeopleMutation {
+  name: String
+  role: String
+  bio: String
+}
+
+input PageEquipeMutation {
+  slug: String
+  title: String
+  description: String
+  people: [PageEquipePeopleMutation]
+  body: JSON
+}
+
+input PageMutation {
+  home: PageHomeMutation
+  contact: PageContactMutation
+  equipe: PageEquipeMutation
 }
 
 schema {

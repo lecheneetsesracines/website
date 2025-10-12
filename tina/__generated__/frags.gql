@@ -10,3 +10,58 @@ fragment SectionParts on Section {
   }
   body
 }
+
+fragment PageParts on Page {
+  __typename
+  ... on PageHome {
+    slug
+    title
+    heroTitle
+    heroDescription
+    contactHeading
+    contactPhoneLabel
+    contactPhoneHref
+    contactEmailLabel
+    contactEmailHref
+    financeursIntro
+    body
+  }
+  ... on PageContact {
+    slug
+    title
+    address {
+      __typename
+      label
+      href
+    }
+    phone {
+      __typename
+      label
+      href
+    }
+    email {
+      __typename
+      label
+      href
+    }
+    infoBlocks {
+      __typename
+      heading
+      body
+    }
+    mapEmbedUrl
+    body
+  }
+  ... on PageEquipe {
+    slug
+    title
+    description
+    people {
+      __typename
+      name
+      role
+      bio
+    }
+    body
+  }
+}
