@@ -1,0 +1,12 @@
+fragment SectionParts on Section {
+  __typename
+  title
+  slug
+  description
+  gallery {
+    __typename
+    imageId
+    alt
+  }
+  body
+}
