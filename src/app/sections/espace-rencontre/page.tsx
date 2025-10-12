@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import { ArticleLayout } from '@/components/ArticleLayout'
 import type { ArticleWithSlug } from '@/lib/articles'
-import espaceRencontre from './espace-rencontre.jpg'
-import espaceRencontreCuisine from './espace-rencontre-2.jpg'
+import espaceRencontre from '@/images/sections/espace-rencontre/espace-rencontre.jpg'
+import espaceRencontreCuisine from '@/images/sections/espace-rencontre/espace-rencontre-2.jpg'
 
 export const metadata = {
   title: 'Espace rencontre',

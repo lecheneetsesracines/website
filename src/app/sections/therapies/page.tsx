@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { ArticleLayout } from '@/components/ArticleLayout'
 import type { ArticleWithSlug } from '@/lib/articles'
-import therapie from './therapie.webp'
+import therapie from '@/images/sections/therapies/therapie.webp'
 
 export const metadata = {
   title: 'Thérapies',

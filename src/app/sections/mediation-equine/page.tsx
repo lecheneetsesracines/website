@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { ArticleLayout } from '@/components/ArticleLayout'
 import type { ArticleWithSlug } from '@/lib/articles'
-import aneRencontre from './cheval-rencontre-2.jpeg'
+import aneRencontre from '@/images/sections/mediation-equine/cheval-rencontre-2.jpeg'
 
 export const metadata = {
   title: 'Médiation équine',

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { ArticleLayout } from '@/components/ArticleLayout'
 import type { ArticleWithSlug } from '@/lib/articles'
-import cafeParent from './cafe-parent.webp'
+import cafeParent from '@/images/sections/cafe-des-parents/cafe-parent.webp'
 
 export const metadata = {
   title: 'Café des parents',

@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { ArticleLayout } from '@/components/ArticleLayout'
 import type { ArticleWithSlug } from '@/lib/articles'
 import { Mail, Phone } from '@/components/SocialIcons'
-import parentalite from './parentalite.webp'
-import parentalite2 from './parentalite-2.webp'
+import parentalite from '@/images/sections/parentalite/parentalite.webp'
+import parentalite2 from '@/images/sections/parentalite/parentalite-2.webp'
 
 export const metadata = {
   title: 'Parentalité',

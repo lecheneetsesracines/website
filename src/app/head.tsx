@@ -4,9 +4,9 @@ import image2 from '@/images/photos/image-2.jpg'
 import image3 from '@/images/photos/image-3.jpg'
 import image4 from '@/images/photos/image-4.jpg'
 import image5 from '@/images/photos/image-5.jpg'
-import parentaliteImage from '@/app/sections/parentalite/parentalite.webp'
-import therapieImage from '@/app/sections/therapies/therapie.webp'
-import cafeParentImage from '@/app/sections/cafe-des-parents/cafe-parent.webp'
+import parentaliteImage from '@/images/sections/parentalite/parentalite.webp'
+import therapieImage from '@/images/sections/therapies/therapie.webp'
+import cafeParentImage from '@/images/sections/cafe-des-parents/cafe-parent.webp'
 
 export default function Head(): JSX.Element {
   const images = [
