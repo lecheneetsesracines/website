@@ -1,7 +1,7 @@
 ---
 title: 'Valeurs'
 slug: 'valeurs'
-description: "Les valeurs de l’association garantissent accueil bienveillant et respect du cadre légal pour l’enfant et ses parents."
+description: "Les valeurs de l’association garantissent un accueil bienveillant et le respect du cadre légal pour l’enfant et ses parents."
 ---
 
 **L’enfant** est reconnu dans sa dimension humaine et sociale ayant le droit et le besoin fondamental d’avoir accès à chacun de ses parents. À travers le contact et la relation avec ses deux parents, l’enfant peut se situer dans son histoire et reconnaître sa place et la place de l’autre dans le groupe familial. La reconnaissance de la filiation contribue à la construction de l’identité psychique de l’enfant, à son bien-être mental et à la prévention de conduites à risque.
