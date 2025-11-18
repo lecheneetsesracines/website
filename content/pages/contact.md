@@ -18,10 +18,10 @@ infoBlocks:
     body: ""
   - heading: "Horaires d’ouverture au public :"
     body: |-
-      - mardi de 17h à 20h
-      - mercredi de 9h à 18h
-      - vendredi de 17h à 20h
-      - samedi de 9h à 18h
+      . mardi  17h - 20h
+      . mercredi  9h - 18h
+      . vendredi  17h - 20h
+      . samedi  9h - 18h
   - heading: ""
     body: "Le secrétariat téléphonique est ouvert les lundi, mardi, jeudi et vendredi de 13h à 18h."
   - heading: "Accès depuis la gare de Melun :"
