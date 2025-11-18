@@ -18,12 +18,12 @@ infoBlocks:
     body: ""
   - heading: "Horaires d’ouverture au public :"
     body: |-
-      les mardis de 17h à 20h
-      les mercredis de 9h à 18h
-      les vendredis de 17h à 20h
-      les samedis de 9h à 18h
+      - mardi de 17h à 20h
+      - mercredi de 9h à 18h
+      - vendredi de 17h à 20h
+      - samedi de 9h à 18h
   - heading: ""
-    body: "Le secrétariat est ouvert les lundis, mardis, jeudis et vendredis de 13h à 18h."
+    body: "Le secrétariat téléphonique est ouvert les lundi, mardi, jeudi et vendredi de 13h à 18h."
   - heading: "Accès depuis la gare de Melun :"
     body: "Bus 3601 / 3604 arrêt Notre-Dame ou 12min en marchant"
   - heading: "Direction gare de Melun :"
