@@ -62,6 +62,6 @@ people:
     role: Intervenante
     bio: 'Educatrice spécialisée, titulaire d’un Master1 en pédagogie spécialisée de Charles IV de Prague et praticienne en médiation équine.'
   - name: Stagiaire
-    role: Intervenante en accompagnement des équipes
-    bio: 'Dans le cadre de sa formation en Master2 de psychologie'
+    role: Intervenante, en formation auprès de l'équipe
+    bio: 'Stage dans le cadre du diplôme de Master2 de psychologie de Paris13 Sorbonne '
 
