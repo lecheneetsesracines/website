@@ -61,4 +61,7 @@ people:
   - name: NEMECKOVA Iva
     role: Intervenante
     bio: 'Educatrice spécialisée, titulaire d’un Master1 en pédagogie spécialisée de Charles IV de Prague et praticienne en médiation équine.'
----
+  - name: Stagiaire
+    role: Intervenante en accompagnement des équipes
+    bio: 'Dans le cadre de sa formation en Master2 de psychologie'
+
