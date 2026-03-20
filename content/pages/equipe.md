@@ -16,52 +16,55 @@ people:
   - name: PEIFFER Eléonore
     role: Secrétaire de l'association
     bio: 'Avocate associée au Barreau de la Seine-Saint-Denis, spécialisée dans le domaine du droit des étrangers appliqué aux mineurs et jeunes majeurs isolés étrangers.'
-  - name: CYRKLEWSKI PALACIO Laura
-    role: Intervenante / Pôle de coordination
-    bio: "Co-fondatrice de l'association. Psychologue clinicienne, titulaire d’un diplôme de psychologie ainsi que d’un Master de psychologie spécialité développement de l’enfant et de l’adolescent de l’Université de Paris. Formée au psycho-trauma, thérapie EMDR – Institut Français d’EMDR."
   - name: OUHIBI Sonia
-    role: Intervenante / Pôle de coordination
+    role: Intervenante Espace de Rencontre / Pôle de coordination
     bio: 'Psychologue clinicienne. Titulaire d’un Master de psychologie spécialité psychopathologie clinique psychanalytique. Parcours : interculturel, transculturel à Paris13 Sorbonne.'
   - name: GUICHE Emmanuelle
-    role: Intervenante / Pôle de coordination
+    role: Intervenante Espace de Rencontre - Médiation équine / Pôle de coordination
     bio: 'Psychologue en milieu scolaire, titulaire d’un Master de psychologie de Paris V Descartes spécialité psychologie clinique et psychopathologie et praticienne en médiation équine.'
+  - name: BARS-VALEYRE Nathalie
+    role: Intervenante Café des parents / Pôle de coordination
+    bio: "Psychologue en milieu scolaire, titulaire d’un diplôme d'état de psychologie scolaire de Paris IV Sorbonne."
   - name: CYRKLEWSKI Nicolas
     role: Administrateur / Pôle de coordination
     bio: "Responsable administratif de l'association, ancien éducateur spécialisé et éducateur sportif auprès de jeunes atteints de troubles autistiques."
   - name: LANGLOIS Claire
     role: Secrétaire auprès du public
     bio: "Responsable du secrétariat, elle assure le premier lien avec les bénéficiaires de l'association pour gérer les démarches logistiques."
+  - name: LOYEM ZANGUE Alain
+    role: intervenante Espace de Rencontre
+    bio: "Psychologue clinicien titulaire d’un Master de psychologie et psychopathologie à l'université de Douala au Cameron ainsi qu'un doctorat de psychologie et psychopathologie à l'université Paris V Descartes."
   - name: NOUREDDINE Hind
-    role: Intervenante
+    role: Intervenante Espace de Rencontre
     bio: 'Psychologue clinicienne et psychothérapeute en libéral, titulaire d’un Master de psychologie de Paris13 Sorbonne spécialité psychopathologie clinique psychanalytique.'
   - name: MUNOZ Paulina
-    role: Intervenante
+    role: Intervenante Espace de Rencontre
     bio: 'Psychologue clinicienne, titulaire d’un Master de psychologie de Paris Ouest Nanterre la Défense, titulaire du Master Psychologie de l’enfance, de l’adolescence et des institutions.'
   - name: DESMOULINS Rachel
-    role: Intervenante
+    role: Intervenante Espace de Rencontre
     bio: 'Psychologue libérale, ancienne enseignante et titulaire d’un Master de psychologie du CNAM spécialité travail, santé et parcours professionnels.'
   - name: DELAROCHE Stéphane
-    role: Intervenant
+    role: Intervenant Espace de Rencontre
     bio: "Educateur spécialisé diplômé d'état et formé à la sophrologie."
-  - name: BARS-VALEYRE Nathalie
-    role: Intervenante
-    bio: "Psychologue en milieu scolaire, titulaire d’un diplôme d'état de psychologie scolaire de Paris IV Sorbonne."
   - name: TISSEAU Fanny
-    role: Intervenante
+    role: Intervenante Café des parents
     bio: "Psychologue en milieu scolaire, titulaire d’un Master de psychologie du CNAM spécialité pratiques de l'orientation professionnelle."
   - name: LAURENT Christine
-    role: Intervenante
+    role: Intervenante Médiation équine
     bio: 'Monitrice d’équitation. Professeur des écoles puis enseignante spécialisée.'
+  - name: MICHEL Jessica
+    role: Intervenante Café des parents
+    bio: "Educatrice spécialisée diplômée d'état et en formation de psychologue."
+  - name: WUILLEMIN Margaux
+    role: Intervenante Café des parents
+    bio: "Psychologue en milieu scolaire, titulaire d’un Master en sciences humaine et sociale, mention psychologie psychologie de Paris VIII."    
+  - name: NEMECKOVA Iva
+    role: Intervenante Médiation équine - Espace de Rencontre
+    bio: 'Educatrice spécialisée, titulaire d’un Master1 en pédagogie spécialisée de Charles IV de Prague et praticienne en médiation équine.'
   - name: BRITO Anthony
     role: Intervenant
     bio: "Educateur spécialisé diplômé d'état."
-  - name: MICHEL Jessica
-    role: Intervenante
-    bio: "Educatrice spécialisée diplômée d'état et en formation de psychologue."
-  - name: NEMECKOVA Iva
-    role: Intervenante
-    bio: 'Educatrice spécialisée, titulaire d’un Master1 en pédagogie spécialisée de Charles IV de Prague et praticienne en médiation équine.'
-  - name: Stagiaire
-    role: Intervenante, en formation auprès de l'équipe
+  - name: Léa Guillo-Guillot
+    role: Stagiaire en formation auprès de l'équipe - intervenante Espace de Rencontre
     bio: 'Stage dans le cadre du diplôme de Master2 de psychologie de Paris13 Sorbonne '
 
