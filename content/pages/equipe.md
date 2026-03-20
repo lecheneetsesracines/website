@@ -64,7 +64,7 @@ people:
   - name: BRITO Anthony
     role: Intervenant
     bio: "Educateur spécialisé diplômé d'état."
-  - name: Léa Guillo-Guillot
+  - name: GUILLO-GUILLOT Léa
     role: Stagiaire en formation auprès de l'équipe - intervenante Espace de Rencontre
     bio: 'Stage dans le cadre du diplôme de Master2 de psychologie de Paris13 Sorbonne '
 
