@@ -61,9 +61,6 @@ people:
   - name: NEMECKOVA Iva
     role: Intervenante Médiation équine - Espace de Rencontre
     bio: 'Educatrice spécialisée, titulaire d’un Master1 en pédagogie spécialisée de Charles IV de Prague et praticienne en médiation équine.'
-  - name: BRITO Anthony
-    role: Intervenant
-    bio: "Educateur spécialisé diplômé d'état."
   - name: GUILLO-GUILLOT Léa
     role: Stagiaire en formation auprès de l'équipe - intervenante Espace de Rencontre
     bio: 'Stage dans le cadre du diplôme de Master2 de psychologie de Paris13 Sorbonne '
