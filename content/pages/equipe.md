@@ -43,9 +43,6 @@ people:
   - name: DESMOULINS Rachel
     role: Intervenante Espace de Rencontre
     bio: 'Psychologue libérale, ancienne enseignante et titulaire d’un Master de psychologie du CNAM spécialité travail, santé et parcours professionnels.'
-  - name: DELAROCHE Stéphane
-    role: Intervenant Espace de Rencontre
-    bio: "Educateur spécialisé diplômé d'état et formé à la sophrologie."
   - name: TISSEAU Fanny
     role: Intervenante Café des parents
     bio: "Psychologue en milieu scolaire, titulaire d’un Master de psychologie du CNAM spécialité pratiques de l'orientation professionnelle."
