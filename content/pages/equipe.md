@@ -32,7 +32,7 @@ people:
     role: Secrétaire auprès du public
     bio: "Responsable du secrétariat, elle assure le premier lien avec les bénéficiaires de l'association pour gérer les démarches logistiques."
   - name: LOYEM ZANGUE Alain
-    role: intervenante Espace de Rencontre
+    role: intervenant Espace de Rencontre / Pôle de coordination
     bio: "Psychologue clinicien titulaire d’un Master de psychologie et psychopathologie à l'université de Douala au Cameron ainsi qu'un doctorat de psychologie et psychopathologie à l'université Paris V Descartes."
   - name: NOUREDDINE Hind
     role: Intervenante Espace de Rencontre
