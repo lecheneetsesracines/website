@@ -52,6 +52,5 @@ people:
   - name: GUILLO-GUILLOT Léa
     role: Intervenante Espace de Rencontre
     bio: 'Psychologue clinicienne. Titulaire d’un Master de psychologie spécialité psychopathologie clinique psychanalytique. Parcours : Psychologie clinique et développement : enfants, adolescents, parentalités à Paris13 Sorbonne. '
- - name:
     role: Stagiaire en formation auprès de l'équipe - intervenante Espace de Rencontre
     bio: 'Stage dans le cadre du diplôme de Master2 de psychologie de Paris13 Sorbonne.'
