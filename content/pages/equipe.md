@@ -34,21 +34,12 @@ people:
   - name: LOYEM ZANGUE Alain
     role: intervenant Espace de Rencontre / Pôle de coordination
     bio: "Psychologue clinicien titulaire d’un Master de psychologie et psychopathologie à l'université de Douala au Cameron ainsi qu'un doctorat de psychologie et psychopathologie à l'université Paris V Descartes."
-  - name: NOUREDDINE Hind
-    role: Intervenante Espace de Rencontre
-    bio: 'Psychologue clinicienne et psychothérapeute en libéral, titulaire d’un Master de psychologie de Paris13 Sorbonne spécialité psychopathologie clinique psychanalytique.'
-  - name: MUNOZ Paulina
-    role: Intervenante Espace de Rencontre
-    bio: 'Psychologue clinicienne, titulaire d’un Master de psychologie de Paris Ouest Nanterre la Défense, titulaire du Master Psychologie de l’enfance, de l’adolescence et des institutions.'
   - name: DESMOULINS Rachel
     role: Intervenante Espace de Rencontre
     bio: 'Psychologue libérale, ancienne enseignante et titulaire d’un Master de psychologie du CNAM spécialité travail, santé et parcours professionnels.'
   - name: TISSEAU Fanny
     role: Intervenante Café des parents
     bio: "Psychologue en milieu scolaire, titulaire d’un Master de psychologie du CNAM spécialité pratiques de l'orientation professionnelle."
-  - name: LAURENT Christine
-    role: Intervenante Médiation équine
-    bio: 'Monitrice d’équitation. Professeur des écoles puis enseignante spécialisée.'
   - name: MICHEL Jessica
     role: Intervenante Café des parents
     bio: "Educatrice spécialisée diplômée d'état et en formation de psychologue."
@@ -59,6 +50,8 @@ people:
     role: Intervenante Médiation équine - Espace de Rencontre
     bio: 'Educatrice spécialisée, titulaire d’un Master1 en pédagogie spécialisée de Charles IV de Prague et praticienne en médiation équine.'
   - name: GUILLO-GUILLOT Léa
+    role: Intervenante Espace de Rencontre
+    bio: 'Psychologue clinicienne. Titulaire d’un Master de psychologie spécialité psychopathologie clinique psychanalytique. Parcours : Psychologie clinique et développement : enfants, adolescents, parentalités à Paris13 Sorbonne. '
+ - name:
     role: Stagiaire en formation auprès de l'équipe - intervenante Espace de Rencontre
     bio: 'Stage dans le cadre du diplôme de Master2 de psychologie de Paris13 Sorbonne '
-
