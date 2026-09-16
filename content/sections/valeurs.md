@@ -1,5 +1,5 @@
 ---
-title: 'VALEURS'
+title: 'Valeurs'
 slug: 'valeurs'
 description: "Les valeurs de l’association garantissent un accueil bienveillant et le respect du cadre légal pour l’enfant et ses parents."
 ---
