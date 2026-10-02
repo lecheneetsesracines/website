@@ -6,6 +6,7 @@ import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
 import { Mail, Map, Phone } from '@/components/SocialIcons'
 import { getPageContent } from '@/lib/pages'
+import { safeHref, safeMailto } from '@/lib/safeUrl'
 import logoAnct from '@/images/logos/anct.jpg'
 import logoAssurance from '@/images/logos/assurance.png'
 import logoCamvs from '@/images/logos/camvs.jpg'
@@ -300,11 +301,11 @@ export default async function Home() {
     heading: contactHeading || 'Pour nous contacter',
     phone: {
       label: contactPhoneLabel || '06 95 60 52 21',
-      href: contactPhoneHref || 'tel:06-95-60-52-21',
+      href: safeHref(contactPhoneHref) ?? 'tel:06-95-60-52-21',
     },
     email: {
       label: contactEmailLabel || 'lechene77familles@gmail.com',
-      href: contactEmailHref || 'mailto:lechene77familles@gmail.com',
+      href: safeMailto(contactEmailHref) ?? 'mailto:lechene77familles@gmail.com',
     },
   }
 

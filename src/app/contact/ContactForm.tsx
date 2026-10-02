@@ -1,11 +1,19 @@
 'use client'
 
+import { safeMailto, safeMapEmbed } from '@/lib/safeUrl'
+
 interface ContactFormProps {
   emailHref: string
   mapEmbedUrl?: string
 }
 
 export function ContactForm({ emailHref, mapEmbedUrl }: ContactFormProps) {
+  // Checked again here, whatever the caller did: the form sends the visitor's
+  // details to this address, and the map URL becomes an iframe src.
+  const mailtoTarget =
+    safeMailto(emailHref) ?? 'mailto:lechene77familles@gmail.com'
+  const mapSrc = safeMapEmbed(mapEmbedUrl)
+
   return (
     <form
       action="#"
@@ -38,16 +46,17 @@ ${message}
 Cordialement,
 ${firstName} ${lastName}`)
 
-        const target = emailHref || 'mailto:lechene77familles@gmail.com'
-        const separator = target.includes('?') ? '&' : '?'
-        window.location.href = `${target}${separator}subject=${subject}&body=${body}`
+        const separator = mailtoTarget.includes('?') ? '&' : '?'
+        window.location.href = `${mailtoTarget}${separator}subject=${subject}&body=${body}`
       }}
     >
       <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
-        {mapEmbedUrl ? (
+        {mapSrc ? (
           <iframe
             className="mb-9 w-full rounded-lg border-0 shadow-sm dark:border-green-700"
-            src={mapEmbedUrl}
+            src={mapSrc}
+            title="Carte Google Maps de l’adresse de l’association Le chêne et ses racines"
+            referrerPolicy="strict-origin-when-cross-origin"
             width="400"
             height="250"
             loading="lazy"
