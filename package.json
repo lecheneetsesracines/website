@@ -8,9 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test:e2e": "playwright test",
-    "test:e2e:update": "playwright test --update-snapshots",
-    "tina:dev": "tinacms dev -c \"next dev\"",
-    "tina:build": "tinacms build --local --skip-cloud-checks"
+    "test:e2e:update": "playwright test --update-snapshots"
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
@@ -18,16 +16,11 @@
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/postcss": "^4.0.6",
     "@tailwindcss/typography": "^0.5.4",
-    "@tinacms/cli": "^1.11.0",
-    "@tinacms/graphql": "^1.6.1",
     "@types/node": "^20.10.8",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
-    "@types/webpack-env": "^1.18.1",
-    "cheerio": "^1.0.0-rc.12",
     "clsx": "^2.1.0",
     "fast-glob": "^3.2.11",
-    "feed": "^4.2.2",
     "gray-matter": "^4.0.3",
     "next": "^14.0.4",
     "next-themes": "^0.2.1",
@@ -36,7 +29,6 @@
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "tailwindcss": "^4.0.6",
-    "tinacms": "^2.9.0",
     "typescript": "^5.3.3"
   },
   "devDependencies": {

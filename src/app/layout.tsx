@@ -12,11 +12,6 @@ export const metadata: Metadata = {
   },
   description:
     'Association dédiée au soutien des familles, nous offrons un cadre bienveillant et sécurisé pour accompagner les parents et les enfants dans la reconstruction de leurs liens. Notre équipe pluridisciplinaire est à l’écoute de chacun, avec pour objectif de favoriser l’apaisement, la confiance et l’autonomie dans le respect de chaque histoire.',
-  alternates: {
-    types: {
-      'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
-    },
-  },
 }
 
 export default function RootLayout({

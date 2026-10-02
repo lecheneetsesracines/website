@@ -38,3 +38,6 @@ next-env.d.ts
 
 # grimoire (local run journals, code graph)
 .grimoire/
+
+# local TinaCMS admin build, no longer produced by this repo
+/public/tina/
