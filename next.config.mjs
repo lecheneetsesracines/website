@@ -9,10 +9,8 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    outputFileTracingIncludes: {
-      '/sections/*': ['./src/app/sections/**/*.tsx'],
-    },
+  outputFileTracingIncludes: {
+    '/sections/*': ['./src/app/sections/**/*.tsx'],
   },
 }
 
