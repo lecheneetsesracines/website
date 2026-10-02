@@ -11,7 +11,7 @@ export interface PageContent {
   body: string
 }
 
-const pagesDirectory = path.join(process.cwd(), 'content', 'pages')
+const pagesDirectory = path.join(process.cwd(), process.env.CONTENT_DIR || 'content', 'pages')
 
 export async function getPageContent(slug: string): Promise<PageContent | null> {
   let filePath = path.join(pagesDirectory, `${slug}.md`)

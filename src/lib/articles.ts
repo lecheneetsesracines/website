@@ -29,7 +29,7 @@ const articleOrder = [
   'therapies',
 ]
 
-const sectionsDirectory = path.join(process.cwd(), 'content', 'sections')
+const sectionsDirectory = path.join(process.cwd(), process.env.CONTENT_DIR || 'content', 'sections')
 
 async function loadSectionFromFile(relativePath: string): Promise<SectionDocument> {
   let absolutePath = path.join(sectionsDirectory, relativePath)
