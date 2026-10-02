@@ -7,6 +7,10 @@ import { ArticleLayout } from '@/components/ArticleLayout'
 import { getAllArticles, getSectionDocument } from '@/lib/articles'
 import { resolveSectionImages } from '@/lib/sectionImages'
 
+// Only the slugs generateStaticParams lists exist: any other slug is a static
+// 404, never a runtime read of content/sections/ (D19).
+export const dynamicParams = false
+
 export async function generateStaticParams() {
   let articles = await getAllArticles()
 
