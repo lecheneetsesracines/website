@@ -6,6 +6,8 @@ Status: approved by roast, 2026-10-02 · Repo: `website` · One grimoire run, on
 
 The site runs Next.js 14.2.3, React 18 and Tailwind 4.0, has 52 open npm advisories (5 critical, 29 high), and has no tests at all. Every push to `main` deploys straight to Vercel Production with no staging and no CI. Upgrading the framework two majors without a safety net means design regressions would be found by visitors.
 
+There's a worse problem than any advisory: production has been frozen since 2026-09-03. That day's edit by the association, `4b31e07` ("Update equipe.md"), left a new intern entry in `content/pages/equipe.md` without its `- name:` line. YAML then reads the intern's `role`/`bio` as duplicate keys on the previous person (`YAMLException: duplicated mapping key`), so `next build` fails prerendering `/equipe`. All 6 production deploys since then failed (GitHub deployment statuses), and the live site still serves the 2026-07-01 content (`dc4e7d8`). Nothing alerted anyone. Decision 20 fixes it.
+
 ## Goals
 
 1. A visual-regression suite that pins the current rendered design of every page, captured on today's pre-upgrade tree, so it guarantees this upgrade and every later piece of work.
@@ -16,14 +18,14 @@ The site runs Next.js 14.2.3, React 18 and Tailwind 4.0, has 52 open npm advisor
 
 - CI (GitHub Actions): the suite and gate run locally on macOS for now.
 - Cross-browser coverage, dark mode (the theme is forced to light, `src/app/providers.tsx:52`), interaction states beyond the mobile menu.
-- Any redesign, copy change or content edit. The frontmatter of `content/**/*.md` is not rewritten.
+- Any redesign, copy change or content edit, apart from the `equipe.md` repair in decision 20. The frontmatter of `content/**/*.md` is not otherwise rewritten.
 - Implementing an RSS feed, adopting Tina Cloud, or replacing GitHub as the content editor.
 
 ## Decisions
 
 1. **Screenshot tool: `@playwright/test` (1.63, Chromium only)** with `toHaveScreenshot`, full page. *Rejected:* cross-browser, since the upgrade changes the framework, not the engines, and WebKit/Firefox would triple the baselines without catching upgrade regressions. *Rejected:* a hosted visual service, which means a vendor, an account and network access for a gate that has to run locally.
 2. **Coverage: 11 pages × 3 viewports**, mobile 390×844, tablet 768×1024 and desktop 1440×900 (owner's call), plus the mobile navigation opened at 390×844. That's 34 baselines. Pages: `/`, `/sections`, the 6 `/sections/<slug>` pages, `/equipe`, `/contact`, and the 404 at an unknown path.
-3. **The suite renders a frozen fixture copy of the content (owner's call).** Today's `content/` (at `ea25b84`) is copied to `e2e/fixtures/content/`. `src/lib/articles.ts` and `src/lib/pages.ts` resolve their directory from a `CONTENT_DIR` env var that defaults to exactly `content`, so production is unchanged. The suite's web server builds and starts with `CONTENT_DIR=e2e/fixtures/content`. *Rejected:* real content, because the association edits `content/` on `main` about once a month and every edit would break the baselines, making a design regression hard to tell from a text change.
+3. **The suite renders a frozen fixture copy of the content (owner's call).** The `content/` of the run's base commit (decision 20, so `equipe.md` already repaired) is copied to `e2e/fixtures/content/`. `src/lib/articles.ts` and `src/lib/pages.ts` resolve their directory from a `CONTENT_DIR` env var that defaults to exactly `content`, so production is unchanged. The suite's web server builds and starts with `CONTENT_DIR=e2e/fixtures/content`. *Rejected:* real content, because the association edits `content/` on `main` about once a month and every edit would break the baselines, making a design regression hard to tell from a text change.
 4. **The suite runs against a production build** (`next build && next start` on port `E2E_PORT`, default 3100), never `next dev`. Dev mode differs in CSS ordering and overlays, and 3100 avoids colliding with a running dev server on 3000.
 5. **Photos and embeds are masked; their geometry is not.** `img` and `iframe` elements, plus the footer's copyright year (`new Date().getFullYear()` in `src/components/Footer.tsx:31`), are masked. A Playwright mask paints the element's box, so its position and size stay pinned while its pixels are ignored. A separate assertion requires every `img` to load (`complete && naturalWidth > 0`). *Rejected:* comparing photos unmasked with a tolerance. Re-encoding changes when `sharp` and Next's optimizer change, so any tolerance loose enough to absorb that would also absorb real text and spacing shifts, and the unattended gate would flake.
 6. **Deterministic capture.** `animations: 'disabled'`. Before each capture: scroll to the bottom and back so lazy `next/image` elements load, wait for every `img.decode()` and one animation frame, and block every request that doesn't go to the local server (the Google Maps iframe, any remote image). The suite runs offline.
@@ -57,6 +59,12 @@ The site runs Next.js 14.2.3, React 18 and Tailwind 4.0, has 52 open npm advisor
     - *Rejected:* `Content-Security-Policy-Report-Only` first, because nothing collects the reports.
 18. **CSP and runtime breakage are tested, not assumed.** Slice 5 adds a non-screenshot spec that visits every page, opens the mobile menu, and fails on any `securitypolicyviolation` event or console error. Adding specs is allowed after slice 1; changing baselines or fixtures is not. Unit tests for `safeUrl.ts` use Node's built-in runner (`node --test`; Node 24 strips TypeScript types natively), so no new dependency. That's `npm run test:unit`, and it joins the gate.
 19. **Unknown section slugs become a static 404.** `export const dynamicParams = false` in `src/app/sections/[slug]/page.tsx` stops any runtime filesystem read from `params.slug` (F7). `resolveSectionImages` looks up `imageId` with `Object.hasOwn`, so an `imageId` of `constructor` can't break the build.
+20. **Repair `equipe.md` on the base, and deliver one PR (owner's call).**
+    - **The repair.** The two orphan lines (the intern's `role`/`bio`, `content/pages/equipe.md:55-56`) are removed. Léa GUILLO-GUILLOT's updated entry stays exactly as the association wrote it, and the intern reappears when the association adds the entry back with a name. *Rejected:* guessing the intern's name.
+    - **Where the repair lives.** It sits on `chore/grimoire-setup`, next to the harness setup, and the run is based on `origin/chore/grimoire-setup` instead of `origin/main`. Both are needed: slice 1's fixtures and every slice's `npm run build` require content that parses.
+    - **One PR.** The run's single PR targets `main` and carries the setup, the repair and all six slices. PR #8 is closed as superseded.
+    - *Rejected (owner's call):* merging the repair at once as a hotfix. The cost is accepted: the live site stays on 2026-07-01 content until that PR merges.
+    - **This is the only content edit in the project.** No slice edits `content/`.
 
 ## Vertical slices
 
@@ -104,6 +112,10 @@ From `security-scout`, 2026-10-02. Nothing is reachable by an anonymous visitor 
   - Turn on secret scanning and push protection (free on public repos).
   - Require 2FA for both accounts that can write.
   - Possibly protect `main` with a ruleset that still lets the association's account push content.
+- **A broken content edit fails silently.** Vercel marks the deployment failed, but nobody is notified, and the association keeps editing a site that doesn't update. Worth deciding:
+  - a GitHub Action that runs `npm run build` on every push to `main`, so the commit gets a red ✗ the editor can see;
+  - or Vercel deployment-failure notifications to someone who watches them.
+- **The association needs to know** that their edits since 2026-09-03 weren't live, and that the new intern must be re-added with a name.
 - **Follow-ups noticed during recon, deliberately not in scope** (each changes visible output or behaviour):
   - `<html lang="en">` on a French site (`src/app/layout.tsx:29`).
   - The title template says "Le Chêne et **ces** racines" (`src/app/layout.tsx:10-11`).
@@ -136,6 +148,7 @@ From `security-scout`, 2026-10-02. Nothing is reachable by an anonymous visitor 
 | Which code breaks on React 19 / Next 15+? | Sync `params`, `useRef<T>()` with no argument, the global `JSX` namespace in `head.tsx`, `experimental.outputFileTracingIncludes` | the files listed in slice 4 |
 | Chromium only? | Yes; the upgrade changes the framework, not the browser engines | decision 1 |
 | Mask or tolerate photos? | Mask them and assert they load | decision 5 |
+| Why does PR #8's Vercel check fail? | Not the PR: `equipe.md`'s YAML has been broken since `4b31e07`. Local `next build` reproduces the error, and every production deploy since 2026-09-03 failed | `npm run build`, GitHub deployment statuses, `git diff dc4e7d8 4b31e07` |
 
 ## Docs drift fixed
 

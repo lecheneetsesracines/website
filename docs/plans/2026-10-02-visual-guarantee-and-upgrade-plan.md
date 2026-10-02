@@ -1,6 +1,8 @@
 # Visual guarantee, then upgrade everything: plan
 
-Spec: [`docs/specs/2026-10-02-visual-guarantee-and-upgrade-design.md`](../specs/2026-10-02-visual-guarantee-and-upgrade-design.md) (decisions referenced as D1–D19) · Repo: `website` · Owner agent: `website-engineer` · One run, one PR · Tracker: GitHub Issues on lecheneetsesracines/website
+Spec: [`docs/specs/2026-10-02-visual-guarantee-and-upgrade-design.md`](../specs/2026-10-02-visual-guarantee-and-upgrade-design.md) (decisions referenced as D1–D20) · Repo: `website` · Owner agent: `website-engineer` · One run, one PR · Tracker: GitHub Issues on lecheneetsesracines/website
+
+**Base: `origin/chore/grimoire-setup` (D20).** That branch holds the harness setup and the repair of `content/pages/equipe.md`, which has broken every production build since 2026-09-03. The run's single PR targets `main` and supersedes PR #8.
 
 ## The problem, in the owner's words
 
