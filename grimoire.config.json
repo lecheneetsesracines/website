@@ -1,0 +1,32 @@
+{
+  "$comment": "grimoire.config.json — the project's harness configuration. Written by /grimoire:setup, read by /orchestrate, /grimoire:logs and the guard hook.",
+  "baseBranch": "origin/main",
+  "memoryDir": "memory",
+  "runsDir": "runs",
+  "requireHook": {
+    "name": "rtk hook claude",
+    "check": "command -v rtk && rtk hook check \"git status\" | grep -q '^rtk '",
+    "fix": "brew install rtk-ai/tap/rtk && rtk init -g, then restart the session",
+    "raw": "rtk proxy"
+  },
+  "preflight": true,
+  "toolHints": { "tracker": "GitHub Issues on lecheneetsesracines/website via the authenticated gh CLI (gh issue …, gh api)" },
+  "maxOutputTokens": 1500000,
+  "telemetry": { "enabled": true, "dir": ".grimoire/runs", "retentionDays": 183 },
+  "specialists": [
+    { "agent": "test-engineer", "repos": ["website"], "use": "putting untested code under test before changing it; the repo has no test runner yet" },
+    { "agent": "migration-engineer", "repos": ["website"], "use": "changes to the Tina schema (tina/config.ts) or to the frontmatter shape of content/**/*.md" }
+  ],
+  "graph": { "enabled": true, "dir": ".grimoire/graph", "exclude": ["tina/__generated__/**", "out/**"] },
+  "repos": [
+    {
+      "name": "website",
+      "path": ".",
+      "agent": "website-engineer",
+      "tags": ["frontend", "content"],
+      "gate": { "run": "npm run lint && npx tsc --noEmit && npm run test:unit && npm run build && npm run test:e2e" },
+      "timeoutMin": 30,
+      "laneSetup": "ln -sfn \"$(pwd)/node_modules\" <lane>/node_modules"
+    }
+  ]
+}
