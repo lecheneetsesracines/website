@@ -15,9 +15,9 @@
   "telemetry": { "enabled": true, "dir": ".grimoire/runs", "retentionDays": 183 },
   "specialists": [
     { "agent": "test-engineer", "repos": ["website"], "use": "putting untested code under test before changing it; the repo has no test runner yet" },
-    { "agent": "migration-engineer", "repos": ["website"], "use": "changes to the Tina schema (tina/config.ts) or to the frontmatter shape of content/**/*.md" }
+    { "agent": "migration-engineer", "repos": ["website"], "use": "changes to the frontmatter shape of content/**/*.md" }
   ],
-  "graph": { "enabled": true, "dir": ".grimoire/graph", "exclude": ["tina/__generated__/**", "out/**"] },
+  "graph": { "enabled": true, "dir": ".grimoire/graph", "exclude": ["out/**"] },
   "repos": [
     {
       "name": "website",

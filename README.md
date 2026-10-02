@@ -7,7 +7,7 @@ Un site vitrine performant construit avec Next.js pour présenter l'association 
 - **Sections thématiques structurées.** Chaque service ou valeur de l'association possède sa propre page dans `src/app/sections`, avec des métadonnées consommées pour générer automatiquement l'index et les cartes d'aperçu sur la page d'accueil.
 - **Page équipe.** Un gabarit dédié présente les membres de l'équipe avec des visuels distants optimisés et un layout responsive pour les écrans haute densité.
 - **Contact détaillé.** Un formulaire côté client prépare un e-mail pré-rempli, affiche une carte Google Maps embarquée, précise les horaires d'ouverture et les informations d'accès depuis la gare.
-- **Méta-données globales.** Le layout racine configure les métadonnées du site, intègre le flux RSS et applique les styles Tailwind globaux, garantissant une base solide pour le SEO et les partages sociaux.
+- **Méta-données globales.** Le layout racine configure les métadonnées du site et applique les styles Tailwind globaux, garantissant une base solide pour le SEO et les partages sociaux.
 
 ## Pile technique
 - [Next.js 14](https://nextjs.org/) et [React 18](https://react.dev/) pour le rendu hybride et les performances web modernes.
@@ -20,15 +20,11 @@ Un site vitrine performant construit avec Next.js pour présenter l'association 
    ```bash
    npm install
    ```
-2. Créez un fichier `.env.local` à la racine et définissez l'URL publique utilisée pour générer le flux RSS :
-   ```env
-   NEXT_PUBLIC_SITE_URL=https://example.com
-   ```
-3. Lancez le serveur de développement :
+2. Lancez le serveur de développement :
    ```bash
    npm run dev
    ```
-4. Ouvrez [http://localhost:3000](http://localhost:3000) pour consulter le site.
+3. Ouvrez [http://localhost:3000](http://localhost:3000) pour consulter le site.
 
 > ℹ️ Next.js 14 requiert Node.js 18.17 ou supérieur pour compiler et exécuter le projet.
 
@@ -45,4 +41,4 @@ Un site vitrine performant construit avec Next.js pour présenter l'association 
 - `src/images` stocke les visuels locaux utilisés par la page d'accueil.
 
 ## Déploiement
-Le projet est prêt pour une mise en production sur [Vercel](https://vercel.com/) ou tout environnement supportant Next.js 14. Utilisez `npm run build` suivi de `npm run start` pour vérifier l'artefact avant déploiement. Pensez à renseigner `NEXT_PUBLIC_SITE_URL` dans les variables d'environnement de l'hébergeur afin de garantir un flux RSS valide.
+Le projet est prêt pour une mise en production sur [Vercel](https://vercel.com/) ou tout environnement supportant Next.js 14. Utilisez `npm run build` suivi de `npm run start` pour vérifier l'artefact avant déploiement.

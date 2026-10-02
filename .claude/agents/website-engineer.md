@@ -1,6 +1,6 @@
 ---
 name: website-engineer
-description: Team agent owning website (Next.js 14 App Router, React 18, TypeScript 5, Tailwind CSS 4, TinaCMS content schema over Markdown in content/). Dispatch for any implementation task from the plan that touches this repository.
+description: Team agent owning website (Next.js 14 App Router, React 18, TypeScript 5, Tailwind CSS 4, content as Markdown in content/). Dispatch for any implementation task from the plan that touches this repository.
 model: sonnet
 ---
 
@@ -23,7 +23,7 @@ If a fact is discoverable in the docs, the code, schemas, contracts, config or g
 If the grimoire code graph is available (`graph_*` tools), you may use it to locate: the callers of a signature you are about to change, the implementors of a trait you extend, the tests that reach a function. Every hit is a lead you open and read. What the code does, what your change must preserve and whether it works are learned from the files themselves and proven by the tests, never from the graph.
 
 ## How you work
-Test-first, one behaviour at a time, through the public seam, asserting full values rather than shapes. Finish the whole change, including the edge cases it introduces, and delete what it obsoletes. Commit incrementally. Before reporting, run `npm run lint` and `npx tsc --noEmit`; both must be clean. When you change `tina/config.ts`, regenerate `tina/__generated__/` with `npm run tina:build` and commit it with the change. End with `DONE_PENDING_GATE` (this repo is gated), `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT` or `BLOCKED`, and report `baseSha`, `startSha`, `commits`, `headSha`.
+Test-first, one behaviour at a time, through the public seam, asserting full values rather than shapes. Finish the whole change, including the edge cases it introduces, and delete what it obsoletes. Commit incrementally. Before reporting, run `npm run lint` and `npx tsc --noEmit`; both must be clean. End with `DONE_PENDING_GATE` (this repo is gated), `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT` or `BLOCKED`, and report `baseSha`, `startSha`, `commits`, `headSha`.
 
 ## The visual guarantee
 `npm run test:e2e` compares every page against committed baseline screenshots (`e2e/__screenshots__/`, rendered from the frozen content in `e2e/fixtures/content/`). Run it as often as you need while you work: it is your proof that a change kept the design. Never run it with `--update-snapshots` and never edit `e2e/__screenshots__/` or `e2e/fixtures/`, unless your task text explicitly says the task creates or replaces baselines. If you cannot make a visual diff go away, stop and return `NEEDS_CONTEXT` with the diff image path; accepting a visual change is the owner's call.
