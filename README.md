@@ -10,8 +10,8 @@ Un site vitrine performant construit avec Next.js pour présenter l'association 
 - **Méta-données globales.** Le layout racine configure les métadonnées du site et applique les styles Tailwind globaux, garantissant une base solide pour le SEO et les partages sociaux.
 
 ## Pile technique
-- [Next.js 14](https://nextjs.org/) et [React 18](https://react.dev/) pour le rendu hybride et les performances web modernes.
-- [TypeScript 5](https://www.typescriptlang.org/) pour la robustesse du typage sur l'ensemble du projet.
+- [Next.js 16](https://nextjs.org/) et [React 19](https://react.dev/) pour le rendu hybride et les performances web modernes.
+- [TypeScript 6](https://www.typescriptlang.org/) pour la robustesse du typage sur l'ensemble du projet.
 - [Tailwind CSS 4](https://tailwindcss.com/) et [Tailwind Typography](https://tailwindcss.com/docs/typography-plugin) pour le design responsive.
 - [next-themes](https://github.com/pacocoursey/next-themes) pour la gestion du thème et la synchronisation avec les préférences système.
 
@@ -26,13 +26,13 @@ Un site vitrine performant construit avec Next.js pour présenter l'association 
    ```
 3. Ouvrez [http://localhost:3000](http://localhost:3000) pour consulter le site.
 
-> ℹ️ Next.js 14 requiert Node.js 18.17 ou supérieur pour compiler et exécuter le projet.
+> ℹ️ Le projet compile et s'exécute avec Next.js 16 sur Node.js 24 (`engines.node` vaut `24.x` dans `package.json`).
 
 ## Scripts disponibles
 - `npm run dev` : lance le serveur de développement Next.js.
 - `npm run build` : génère la version optimisée pour la production.
 - `npm run start` : démarre le serveur en mode production après un build.
-- `npm run lint` : exécute les règles ESLint configurées par Next.js.
+- `npm run lint` : exécute `eslint .` avec la configuration ESLint « flat » de `eslint.config.mjs`, construite sur les règles `core-web-vitals` de `eslint-config-next`.
 
 ## Organisation du code
 - `src/app` contient les routes Next.js, dont la page d'accueil (`page.tsx`), l'index des sections et les sous-pages dédiées à chaque service.
@@ -41,4 +41,4 @@ Un site vitrine performant construit avec Next.js pour présenter l'association 
 - `src/images` stocke les visuels locaux utilisés par la page d'accueil.
 
 ## Déploiement
-Le projet est prêt pour une mise en production sur [Vercel](https://vercel.com/) ou tout environnement supportant Next.js 14. Utilisez `npm run build` suivi de `npm run start` pour vérifier l'artefact avant déploiement.
+Le projet est prêt pour une mise en production sur [Vercel](https://vercel.com/) ou tout environnement supportant Next.js 16 sur Node.js 24. Utilisez `npm run build` suivi de `npm run start` pour vérifier l'artefact avant déploiement.
