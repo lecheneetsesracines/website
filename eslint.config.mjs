@@ -28,6 +28,9 @@ export default defineConfig([
     'test-results/**',
     'playwright-report/**',
     '.grimoire/**',
+    // Parallel lanes of the build loop: whole worktrees, each with its own
+    // src/, node_modules and .next, linted from inside the lane instead.
+    '.worktrees/**',
     // Stale TinaCMS admin bundle some checkouts still hold: minified, and big
     // enough to exhaust ESLint's heap.
     'public/tina/**',

@@ -36,8 +36,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# grimoire (local run journals, code graph)
+# grimoire (local run journals, code graph, parallel lane worktrees)
 .grimoire/
+/.worktrees/
 
 # local TinaCMS admin build, no longer produced by this repo
 /public/tina/
