@@ -1,2 +1,2 @@
 <!-- AGENT MEMORY for test-engineer: facts that apply to every dispatch. Cap 1200 chars. Entries separated by § . Written only by `crystallize`; see the grimoire plugin's memory/README.md -->
-(no entries yet)
+Unit tests run with Node's built-in runner (`npm run test:unit`, `node --test`) on TypeScript that Node 24 strips natively, with no test dependency: a test and the module it imports use erasable TypeScript only (no enums, namespaces or parameter properties) (2026-10-03).

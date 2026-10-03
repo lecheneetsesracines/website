@@ -33,6 +33,10 @@ Un site vitrine performant construit avec Next.js pour présenter l'association 
 - `npm run build` : génère la version optimisée pour la production.
 - `npm run start` : démarre le serveur en mode production après un build.
 - `npm run lint` : exécute `eslint .` avec la configuration ESLint « flat » de `eslint.config.mjs`, construite sur les règles `core-web-vitals` de `eslint-config-next`.
+- `npm run typecheck` : génère les types de Next.js (`next typegen`, qui écrit `next-env.d.ts`, ignoré par git) puis vérifie les types avec `tsc --noEmit`. Sur un clone neuf, un `tsc` lancé seul échoue sur chaque import d'image.
+- `npm run test:unit` : lance les tests unitaires avec le lanceur intégré de Node (`node --test`).
+- `npm run test:e2e` : construit le site sur le contenu figé `e2e/fixtures/content`, puis compare chaque page aux captures de référence de `e2e/__screenshots__/` (Playwright, Chromium, macOS). Le build laisse le contenu figé dans `.next` : relancez `npm run build` avant `npm run start` sur le vrai contenu.
+- `npm run test:e2e:update` : régénère les captures de référence. À réserver à un changement visuel voulu et validé.
 
 ## Organisation du code
 - `src/app` contient les routes Next.js, dont la page d'accueil (`page.tsx`), l'index des sections et les sous-pages dédiées à chaque service.

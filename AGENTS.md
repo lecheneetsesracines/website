@@ -8,14 +8,14 @@ Memory: `memory/harness.md` (shared, imported by `CLAUDE.md`) and `memory/agents
 
 | Agent | Repo | Default model | Owns | Gate it never runs |
 | --- | --- | --- | --- | --- |
-| `website-engineer` | `website` (`.`): Next.js 14, React 18, TypeScript 5, Tailwind 4 | sonnet (opus in unattended runs) | `grimoire:tdd`, `frontend-design` | `npm run build` |
+| `website-engineer` | `website` (`.`): Next.js 16, React 19, TypeScript 6, Tailwind 4, Node 24 | sonnet (opus in unattended runs) | `grimoire:tdd`, `frontend-design` | the full gate, `npm run lint && npm run typecheck && npm run test:unit && npm run build && npm run test:e2e` (run once by the gate dispatch) |
 
 ## Specialists (enabled in `grimoire.config.json`)
 
 | Agent | Repos | Use here |
 | --- | --- | --- |
 | `migration-engineer` | `website` | changes to the frontmatter shape of `content/**/*.md` |
-| `test-engineer` | `website` | putting untested code under test; the repo has no tests and no test runner yet |
+| `test-engineer` | `website` | putting untested code under test before changing it (unit tests with `node --test`, visual and runtime checks with Playwright) |
 
 ## Scouts in use
 
