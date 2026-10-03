@@ -26,7 +26,8 @@
       "tags": ["frontend", "content"],
       "gate": { "run": "npm run lint && npx tsc --noEmit && npm run test:unit && npm run build && npm run test:e2e" },
       "timeoutMin": 30,
-      "laneSetup": "ln -sfn \"$(pwd)/node_modules\" <lane>/node_modules"
+      "$comment": "laneSetup gives each lane a real node_modules, an APFS clone (cp -c falls back to a plain copy elsewhere): Next 16's Turbopack refuses a symlinked node_modules ('points out of the filesystem root'), and an npm install in a lane must not touch the shared checkout. A real directory already there is kept; a stale symlink or an interrupted .partial copy is replaced.",
+      "laneSetup": "[ -d <lane>/node_modules ] && [ ! -L <lane>/node_modules ] || { rm -rf <lane>/node_modules <lane>/node_modules.partial && cp -cR \"$(pwd)/node_modules\" <lane>/node_modules.partial && mv <lane>/node_modules.partial <lane>/node_modules; }"
     }
   ]
 }
