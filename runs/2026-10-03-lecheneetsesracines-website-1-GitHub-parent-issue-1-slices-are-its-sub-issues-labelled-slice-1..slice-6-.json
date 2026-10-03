@@ -71,13 +71,7 @@
       ]
     },
     {
-      "text": "In the website repo every `npm run test:e2e` runs a full `next build` + `next start` (CONTENT_DIR=e2e/fixtures/content, port E2E_PORT||3100, reuseExistingServer:false), roughly 2 min per run on this Mac. Slice 1's work plus 3 consecutive e2e runs plus a real-content build, lint and tsc went past 40 min. For later runs set website timeoutMin to at least 75 in the run args/grimoire.config.json (it can only lengthen the 40-min default). Within a dispatch, commit each green step at once and run the e2e suite only as often as acceptance requires, so a timeout never loses uncommitted work.",
-      "repos": [
-        "website"
-      ]
-    },
-    {
-      "text": "D14 fact for slice 4 (seen at replan time in the real-content .next build of 302ed7a; the #2 retry re-confirms it in its output). On Next 14.2 the App Router ignores src/app/head.tsx: the built `/` HTML has no `<link rel=\"preload\">` for any of the 9 images head.tsx lists. The only image preload is next/image's `priority` avatar (src/components/Header.tsx:296, imageSrcSet form), plus a webpack script preload. Slice 4 therefore deletes head.tsx and does not port it.",
+      "text": "Measured, not estimated: in the website repo one `npm run test:e2e` (a build of the fixture content plus 76 Playwright tests) takes about 50 seconds, and the whole gate under a minute (44 s from a fresh clone, measured 2026-10-03). Slice 1 passed the 40-minute backstop because a PreToolUse hook on the machine that ran the loop made each of the implementer’s 73 Bash calls wait 30 s (36 of its 47 minutes), not because of the tests. `repos[].timeoutMin` only raises the backstop, so no repo setting fixes that: time a trivial command before a run (grimoire 0.8.1 probes it and refuses past 15 s).",
       "repos": [
         "website"
       ]
@@ -87,6 +81,23 @@
       "repos": [
         "website"
       ]
+    }
+  ],
+  "corrections": [
+    {
+      "on": "2026-10-03",
+      "by": "crystallize, run by hand",
+      "what": "Learning 2 replaced. It blamed slow e2e runs (“roughly 2 min per run”) and proposed a website timeoutMin of 75. The slice-1 implementer measured about 51 s per e2e run, its transcript shows 73 Bash calls that each waited 30 s on a PreToolUse hook (36 of its 47 minutes), and timeoutMin can only raise the 40-minute backstop."
+    },
+    {
+      "on": "2026-10-03",
+      "by": "crystallize, run by hand",
+      "what": "Learning 3 removed: a Next 14 fact about src/app/head.tsx, which slice 4 deleted. It no longer applies to anything."
+    },
+    {
+      "on": "2026-10-03",
+      "by": "crystallize, run by hand",
+      "what": "Absolute local paths rewritten repo-relative, with the home directory as ~."
     }
   ],
   "priorLearningsUsed": [],
@@ -140,7 +151,7 @@
       "repo": "website",
       "severity": "minor",
       "persona": "Spec Hawk",
-      "where": "/Users/laurent/website/e2e/support.ts:113",
+      "where": "e2e/support.ts:113",
       "issue": "masks() leaves an img unmasked when its box lies entirely outside a clipping ancestor, or entirely under the opened mobile menu panel. This departs from the literal D5 wording that every img is masked. It is documented in the comment and reasoned (a mask would paint over real page pixels), and the screenshots look right, but it is an interpretation of D5 that slice 4 and later maintainers should know about. It also depends on a geometry heuristic, which would fail quietly if a layout change made an image reach the screenshot while the heuristic still treats it as clipped. No rework needed."
     },
     {
@@ -148,7 +159,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Spec Hawk",
-      "where": "/Users/laurent/website/src/lib/articles.ts:32",
+      "where": "src/lib/articles.ts:32",
       "issue": "The seam line is about 100 characters long. It is correct and the default is exactly 'content', and prettier is not part of the D9 gate. The same applies to src/lib/pages.ts:14."
     },
     {
@@ -156,7 +167,7 @@
       "repo": "website",
       "severity": "minor",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/e2e/fixtures/content:1",
+      "where": "e2e/fixtures/content:1",
       "issue": "The fixture is byte-identical to content/, so the baselines pass identically whether or not CONTENT_DIR is honoured. Nothing in the suite proves the seam works until content/ diverges, for example when the association edits it on main. I verified by reading that both loaders and the glob use the seam. A later guard would be a build against a divergent content dir, but none is required in this slice."
     },
     {
@@ -164,7 +175,7 @@
       "repo": "website",
       "severity": "minor",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/playwright.config.ts:50",
+      "where": "playwright.config.ts:50",
       "issue": "The webServer command runs `npm run build` into the shared `.next`. Running the e2e suite clobbers the output of any `next dev` or `next start` running from the same checkout, and leaves a fixture build in `.next`. This is only a workflow hazard, because gate runs rebuild anyway. If port 3100 is busy the run fails and E2E_PORT must be set; that is intended by `reuseExistingServer: false`."
     },
     {
@@ -172,7 +183,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/src/lib/articles.ts:32",
+      "where": "src/lib/articles.ts:32",
       "issue": "The new line is over 100 characters and so is the equivalent line in pages.ts:14. The repo has a prettier config, but neighbouring lines are already over 80 columns. This is polish only."
     },
     {
@@ -180,7 +191,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/playwright.config.ts:9",
+      "where": "playwright.config.ts:9",
       "issue": "The baselines depend on the macOS system font stack, since Tailwind's default sans is used and no webfont is loaded. They are pinned to `darwin` by design (D7), but a macOS font or Chromium rendering change could shift glyphs, and the suite cannot run on Linux or in CI without new baselines."
     },
     {
@@ -188,7 +199,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Spec Hawk",
-      "where": "/Users/laurent/website/AGENTS.md:22",
+      "where": "AGENTS.md:22",
       "issue": "The `security-scout` and `reference-scout` rows also lose their Tina mentions, which the task text did not list (it named only the stack line and the `migration-engineer` row). This falls within spec slice row 2 ('Harness files that mention Tina are updated too'), and a stale Tina mention would be drift. No action needed."
     },
     {
@@ -196,7 +207,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Spec Hawk",
-      "where": "/Users/laurent/website/.env.example:1",
+      "where": ".env.example:1",
       "issue": "`NEXT_PUBLIC_SITE_URL` is now read by nothing in the tree. The brief said to leave this file alone and to report the variable as unused, so the owner can decide. Recorded only."
     },
     {
@@ -204,7 +215,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Spec Hawk",
-      "where": "/Users/laurent/website/memory/agents/migration-engineer.md:1",
+      "where": "memory/agents/migration-engineer.md:1",
       "issue": "The memory file still references `tina/config.ts`. `memory/**` is written only by `crystallize`, so this is for `crystallize` to fix and not a defect in this diff."
     },
     {
@@ -212,7 +223,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/.env.example:1",
+      "where": ".env.example:1",
       "issue": "Tracked file still declares NEXT_PUBLIC_SITE_URL, which no code reads now that the RSS alternates link is gone. It is not a declared file and the brief says to leave it. Recorded so the owner can decide whether to delete it."
     },
     {
@@ -220,7 +231,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/memory/agents/migration-engineer.md:2",
+      "where": "memory/agents/migration-engineer.md:2",
       "issue": "Still refers to the Tina schema (`tina/config.ts`), which no longer exists. Only `crystallize` may edit memory, so this is a leftover to hand over."
     },
     {
@@ -228,7 +239,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/package-lock.json:1",
+      "where": "package-lock.json:1",
       "issue": "The commit message for f2ccd67 gives the before and after audit counts and groups the six residual advisories by cause. It does not list each one with its package and severity, which the brief asked the task output to record. I listed them from `npm audit --json` for this review: next critical, and eslint-config-next, @next/eslint-plugin-next, glob, nested postcss and sharp, each high. Polish only; no rework needed."
     },
     {
@@ -236,7 +247,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/package.json:38",
+      "where": "package.json:38",
       "issue": "Informational: with prettier 3.9.9 and prettier-plugin-tailwindcss 0.8.1, `prettier --check src/components/Header.tsx` reports style issues. I did not check whether it already did before the bump. The task forbids a repo-wide reformat, so this is correct as delivered. Whoever next runs Prettier on touched files should expect class-order diffs."
     },
     {
@@ -244,7 +255,7 @@
       "repo": "website",
       "severity": "minor",
       "persona": "Spec Hawk",
-      "where": "/Users/laurent/website/typography.ts:226",
+      "where": "typography.ts:226",
       "issue": "`npm run build` and the e2e webServer build print a Turbopack warning, \"Parsing CSS source code failed ... Unknown at rule: @screen\". It comes from `'@screen lg'` in `typography.ts`, which this slice does not touch. Tailwind 4 has no `@screen`, so the rule was already inert and browsers ignore it. The build exits 0 and all 34 baselines match, so this does not meet the task's bar for a `--webpack` fallback, which is a Turbopack-only failure. The task output should still mention the warning so the 'build is clean' claim is not read as warning-free. Fixing it is a later change, and `typography.ts` is not a declared file."
     },
     {
@@ -252,7 +263,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Spec Hawk",
-      "where": "/Users/laurent/website/tsconfig.json:1",
+      "where": "tsconfig.json:1",
       "issue": "Besides the required `jsx: react-jsx` and `.next/dev/types/**/*.ts` include, the diff reformats the `lib`, `paths`, `include` and `exclude` arrays onto multiple lines. That is `next build`'s own rewrite, which the brief says to keep, so it is acceptable. It is cosmetic churn and not a behaviour change."
     },
     {
@@ -260,7 +271,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Spec Hawk",
-      "where": "/Users/laurent/website/package.json:33",
+      "where": "package.json:33",
       "issue": "`typescript` is `~6.0.3` and `react` / `react-dom` are `^19.3.0`, while the task text names 6.0.3 and 19.3.x. The lockfile resolves exactly 6.0.3 and 19.3.0, and the ranges follow the repo's existing caret convention. The tilde matches the `<6.1.0` peer ceiling in D11."
     },
     {
@@ -268,7 +279,7 @@
       "repo": "website",
       "severity": "minor",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/typography.ts:226",
+      "where": "typography.ts:226",
       "issue": "The build is not warning-free under Turbopack, although the brief asked for a clean build. The unchanged `'@screen lg'` key is a Tailwind 3 directive that Tailwind 4 leaves in the output. Tailwind's own optimizer warns \"Unknown at rule: @screen\", which was probably there before. Turbopack now adds \"Parsing CSS source code failed\" at src/styles/tailwind.css:2:15693. The CSS is still emitted as Tailwind produced it, the `@screen lg{margin-left:calc(3rem * -1);...}` block is still in the built CSS (dead for prose hr), and the build exits 0. Node 24 also prints MODULE_TYPELESS_PACKAGE_JSON for typography.ts. Nothing visual changed (e2e 34/34). Mention both in the PR body; fixing typography.ts is a separate change."
     },
     {
@@ -276,7 +287,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/tsconfig.json:1",
+      "where": "tsconfig.json:1",
       "issue": "Only `jsx: react-jsx` and the `.next/dev/types/**/*.ts` include entry are required. The `lib`, `paths`, `include` and `exclude` arrays were also expanded to multi-line, which is next build's rewrite formatting. It is harmless noise and not worth a rework round."
     },
     {
@@ -284,7 +295,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/eslint.config.mjs:32",
+      "where": "eslint.config.mjs:32",
       "issue": "The `public/tina/**` ignore covers a directory that is already gitignored (/public/tina/) and absent here. It is defensive and its comment explains it, so it is harmless. Separately, the rule-offs are file-scoped (whole Header.tsx, providers.tsx and ContactForm.tsx), not line-scoped; the brief allows this and each has a comment naming the rule."
     },
     {
@@ -292,7 +303,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Spec Hawk",
-      "where": "/Users/laurent/website/src/lib/safeUrl.ts:81",
+      "where": "src/lib/safeUrl.ts:81",
       "issue": "`safeMapEmbed` accepts a path of `/maps/embed` or `/maps/embed/...` only, so `/maps/embedded` is rejected. That is slightly stricter than the spec's literal prefix `https://www.google.com/maps/embed`. It matches the hydration note, is safe, accepts today's content, and the test pins it. Recorded only so the divergence from the prefix wording is visible."
     },
     {
@@ -300,7 +311,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Spec Hawk",
-      "where": "/Users/laurent/website/package.json:10",
+      "where": "package.json:10",
       "issue": "`npm run test:unit` prints Node's MODULE_TYPELESS_PACKAGE_JSON warning on every run, because `package.json` has no `\"type\"` field and the `.ts` test is reparsed as ESM. It is harmless and the run is green. Adding `\"type\": \"module\"` would affect the rest of the toolchain, so leaving it is the right call for this slice."
     },
     {
@@ -308,7 +319,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/src/app/page.tsx:324",
+      "where": "src/app/page.tsx:324",
       "issue": "`contactInfo.phone.href || 'tel:06-95-60-52-21'` (and the matching `mailto:` fallback at line 329) can never fire, because `contactInfo` already falls back with `??`. These fallbacks were already unreachable before this change, so it is not a regression. The hard-coded address now appears in three places (home page, contact page, `ContactForm`); a shared constant would remove the duplication."
     },
     {
@@ -316,7 +327,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/package.json:10",
+      "where": "package.json:10",
       "issue": "`node --test` prints a MODULE_TYPELESS_PACKAGE_JSON warning on every run, because the package has no `\"type\"` field and the `.ts` test is reparsed as ESM. It is harmless, and the fix (`\"type\": \"module\"`) would affect the whole package, so leave it."
     },
     {
@@ -324,7 +335,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/src/lib/articles.ts:98",
+      "where": "src/lib/articles.ts:98",
       "issue": "Not part of this diff, so for a later hardening pass only. `generateStaticParams` takes `slug` from section frontmatter, and `getSectionDocument` then passes it to `path.join(sectionsDirectory, `${slug}.md`)`. `dynamicParams = false` closes the runtime hole (F7). A frontmatter `slug` containing `../` would still be read at build time, but only association-authored content can set it."
     },
     {
@@ -332,7 +343,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/e2e/runtime.spec.ts:172",
+      "where": "e2e/runtime.spec.ts:172",
       "issue": "The negative control asserts the full Chromium console message text for a CSP block. It is stable while @playwright/test is pinned at 1.63.0 and so is its bundled Chromium, but a Playwright upgrade could change the wording and fail the test for a reason unrelated to the CSP. Matching on the 'violates the following Content Security Policy directive' prefix would be less brittle."
     },
     {
@@ -340,7 +351,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/e2e/runtime.spec.ts:135",
+      "where": "e2e/runtime.spec.ts:135",
       "issue": "The header assertion hard-codes the production CSP. If `VERCEL_ENV=preview` is exported in the shell, the webServer build inherits it, the built policy gains `https://vercel.live`, and the test fails with a CSP diff that doesn't name the cause. This is a known and accepted limitation per the brief, so it is recorded only."
     },
     {
@@ -348,7 +359,7 @@
       "repo": "website",
       "severity": "minor",
       "persona": "Adversarial QA & Integrity",
-      "where": "/Users/laurent/website/next.config.mjs:10",
+      "where": "next.config.mjs:10",
       "issue": "`img-src 'self' data: blob:` and `frame-src https://www.google.com` follow D17 exactly, but editors on `main` can add content the CSP silently blocks: an `![](https://...)` image in a markdown body, or a `mapEmbedUrl` on another host. Neither the build nor the e2e suite would catch it, because the suite runs on fixture content. Today's `content/` has neither, so there is no current regression."
     },
     {
@@ -396,7 +407,7 @@
       "repo": "website",
       "severity": "minor",
       "persona": "Privacy Engineer",
-      "where": "/Users/laurent/website/src/app/contact/ContactForm.tsx:55",
+      "where": "src/app/contact/ContactForm.tsx:55",
       "issue": "The Google Maps iframe on /contact loads for every visitor with no consent step. Google receives the visitor's IP and can set its own cookies, and the site has no consent banner or privacy notice (CNIL/ePrivacy for a French association). This is not new to the branch, and the branch makes it slightly better (referrerPolicy, CSP frame-src pinned to www.google.com, geolocation denied). Consider a follow-up issue for a click-to-load placeholder, or a static map image with a link, so Google is contacted only after an explicit action. Not rework for this PR."
     },
     {
@@ -404,7 +415,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Privacy Engineer",
-      "where": "/Users/laurent/website/next.config.mjs:31",
+      "where": "next.config.mjs:31",
       "issue": "Permissions-Policy covers camera, microphone and geolocation only. Adding `browsing-topics=()` would opt the site out of the Topics API, and `poweredByHeader: false` would drop the `X-Powered-By: Next.js` header, which I saw in the response. Neither is required."
     },
     {
@@ -412,7 +423,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Privacy Engineer",
-      "where": "/Users/laurent/website/.gitignore:30",
+      "where": ".gitignore:30",
       "issue": "The repo is public and `.gitignore` ignores only `.env*.local`. A plain `.env` or `.env.production` would be committable. No env var is needed any more, since the README `.env.local` step and `NEXT_PUBLIC_SITE_URL` use are gone, but the `.env.example` entry is stale. Consider ignoring `.env*` except `.env.example`, or deleting both."
     },
     {
@@ -420,7 +431,7 @@
       "repo": "website",
       "severity": "nit",
       "persona": "Privacy Engineer",
-      "where": "/Users/laurent/website/src/app/page.tsx:336",
+      "where": "src/app/page.tsx:336",
       "issue": "The hard-coded Google Maps link, and the same URL in content/pages/contact.md, carries browser-session query parameters (`rlz=1C5CHFA_enFR977FR977`, `gs_lcrp=...`) copied from someone's Chrome search. They are harmless to visitors, but a clean `https://www.google.com/maps/dir/?api=1&destination=...` link would be cleaner. This is pre-existing, and the content is frozen for the baselines, so it is not for this PR."
     }
   ],

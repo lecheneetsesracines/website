@@ -1,2 +1,2 @@
 <!-- AGENT MEMORY for migration-engineer: facts that apply to every dispatch. Cap 1200 chars. Entries separated by § . Written only by `crystallize`; see the grimoire plugin's memory/README.md -->
-The data behind the Tina schema (`tina/config.ts`) is the frontmatter of `content/**/*.md`, which non-developers edit on `main` through the GitHub web editor concurrently with code work; every merge to `main` deploys to production immediately (2026-10-02).
+The frontmatter of `content/**/*.md` is edited by non-developers on `main` through the GitHub web editor, concurrently with code work, and every merge to `main` deploys to production immediately (2026-10-02).
