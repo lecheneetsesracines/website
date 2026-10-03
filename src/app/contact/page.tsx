@@ -13,6 +13,7 @@ import {
 import Link from 'next/link'
 
 import { getPageContent } from '@/lib/pages'
+import { safeHref, safeMailto, safeMapEmbed } from '@/lib/safeUrl'
 import { ContactForm } from './ContactForm'
 
 interface ContactLink {
@@ -35,7 +36,10 @@ interface ContactContent {
 }
 
 function parseContactContent(data: Record<string, unknown>): ContactContent {
-  const toLink = (entry: unknown): ContactLink | undefined => {
+  const toLink = (
+    entry: unknown,
+    allowHref: (url: string) => string | undefined,
+  ): ContactLink | undefined => {
     if (!entry || typeof entry !== 'object') {
       return undefined
     }
@@ -44,7 +48,7 @@ function parseContactContent(data: Record<string, unknown>): ContactContent {
 
     return {
       label: typeof label === 'string' ? label : undefined,
-      href: typeof href === 'string' ? href : undefined,
+      href: typeof href === 'string' ? allowHref(href) : undefined,
     }
   }
 
@@ -78,12 +82,14 @@ function parseContactContent(data: Record<string, unknown>): ContactContent {
       typeof data.title === 'string' && data.title.length > 0
         ? data.title
         : 'Contactez-nous',
-    address: toLink(data.address),
-    phone: toLink(data.phone),
-    email: toLink(data.email),
+    address: toLink(data.address, safeHref),
+    phone: toLink(data.phone, safeHref),
+    email: toLink(data.email, safeMailto),
     infoBlocks,
     mapEmbedUrl:
-      typeof data.mapEmbedUrl === 'string' ? data.mapEmbedUrl : undefined,
+      typeof data.mapEmbedUrl === 'string'
+        ? safeMapEmbed(data.mapEmbedUrl)
+        : undefined,
   }
 }
 
@@ -277,7 +283,7 @@ export default async function Contact() {
             </div>
           </div>
           <ContactForm
-            emailHref={content.email?.href || 'mailto:lechene77familles@gmail.com'}
+            emailHref={content.email?.href ?? 'mailto:lechene77familles@gmail.com'}
             mapEmbedUrl={content.mapEmbedUrl}
           />
         </div>

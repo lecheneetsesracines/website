@@ -39,10 +39,13 @@ export function resolveSectionImages(
         return null
       }
 
-      let image = registry[entry.imageId]
-      if (!image) {
+      // Own keys only: an imageId such as "constructor" must not resolve to
+      // something inherited from Object.prototype.
+      if (!Object.hasOwn(registry, entry.imageId)) {
         return null
       }
+
+      let image = registry[entry.imageId]
 
       return {
         image,

@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
 
 # next.js
 /.next/
@@ -33,3 +35,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# grimoire (local run journals, code graph, parallel lane worktrees)
+.grimoire/
+/.worktrees/
+
+# local TinaCMS admin build, no longer produced by this repo
+/public/tina/

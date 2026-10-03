@@ -7,6 +7,10 @@ import { ArticleLayout } from '@/components/ArticleLayout'
 import { getAllArticles, getSectionDocument } from '@/lib/articles'
 import { resolveSectionImages } from '@/lib/sectionImages'
 
+// Only the slugs generateStaticParams lists exist: any other slug is a static
+// 404, never a runtime read of content/sections/ (D19).
+export const dynamicParams = false
+
 export async function generateStaticParams() {
   let articles = await getAllArticles()
 
@@ -18,16 +22,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
-  let doc = await getSectionDocument(params.slug)
+  let { slug } = await params
+  let doc = await getSectionDocument(slug)
 
   if (!doc) {
     return {}
   }
 
   return {
-    title: doc.title ?? params.slug,
+    title: doc.title ?? slug,
     description: doc.description ?? '',
   }
 }
@@ -35,9 +40,10 @@ export async function generateMetadata({
 export default async function SectionPage({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
-  let doc = await getSectionDocument(params.slug)
+  let { slug } = await params
+  let doc = await getSectionDocument(slug)
 
   if (!doc) {
     notFound()
@@ -46,8 +52,8 @@ export default async function SectionPage({
   let gallery = resolveSectionImages(doc.gallery)
 
   let article = {
-    slug: doc.slug ?? params.slug,
-    title: doc.title ?? params.slug,
+    slug: doc.slug ?? slug,
+    title: doc.title ?? slug,
     description: doc.description ?? '',
     author: 'Le chêne et ses racines',
     date: '',
