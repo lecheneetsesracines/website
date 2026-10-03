@@ -71,7 +71,7 @@
       ]
     },
     {
-      "text": "Measured, not estimated: in the website repo one `npm run test:e2e` (a build of the fixture content plus 76 Playwright tests) takes about 50 seconds, and the whole gate a few minutes. Slice 1 passed the 40-minute backstop because a PreToolUse hook on the machine that ran the loop made each of the implementer’s 73 Bash calls wait 30 s (36 of its 47 minutes), not because of the tests. `repos[].timeoutMin` only raises the backstop, so no repo setting fixes that: time a trivial command before a run (grimoire 0.8.1 probes it and refuses past 15 s).",
+      "text": "Measured, not estimated: in the website repo one `npm run test:e2e` (a build of the fixture content plus 76 Playwright tests) takes about 50 seconds, and the whole gate under a minute (44 s from a fresh clone, measured 2026-10-03). Slice 1 passed the 40-minute backstop because a PreToolUse hook on the machine that ran the loop made each of the implementer’s 73 Bash calls wait 30 s (36 of its 47 minutes), not because of the tests. `repos[].timeoutMin` only raises the backstop, so no repo setting fixes that: time a trivial command before a run (grimoire 0.8.1 probes it and refuses past 15 s).",
       "repos": [
         "website"
       ]
