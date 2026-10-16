@@ -54,7 +54,7 @@ people:
     bio: 'Psychologue clinicienne. Titulaire d’un Master de psychologie spécialité psychopathologie clinique psychanalytique. Parcours : Psychologie clinique et développement : enfants, adolescents, parentalités à Paris13 Sorbonne. '
   - name: LABORDE Clara
     role: Intervenante Espace de Rencontre
-    bio: 'stagiaire en Master2 de psychologie à l’université Sorbonne Paris Nord '
+    bio: "Stagiaire en Master 2 de psychologie à l'université Sorbonne Paris Nord"
   - name: LERICE Joy
     role: Intervenante Espace de Rencontre
-    bio: 'stagiaire en Master2 de psychologie à l’université Sorbonne Paris Nord ' 
+    bio: "Stagiaire en Master 2 de psychologie à l'université Sorbonne Paris Nord"
