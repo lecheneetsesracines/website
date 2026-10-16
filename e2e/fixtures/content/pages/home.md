@@ -10,7 +10,27 @@ contactPhoneLabel: 06 95 60 52 21
 contactPhoneHref: tel:06-95-60-52-21
 contactEmailLabel: lechene77familles@gmail.com
 contactEmailHref: mailto:lechene77familles@gmail.com
+financeursHeading: Nos financeurs
 financeursIntro: >-
   Tous nos services sont non payants et financés par les partenaires suivants :
+financeurs:
+  - name: "Caisse d'Allocations Familiales"
+    logo: caf.svg
+  - name: "Cour d'appel de Paris"
+    logo: cap.jpg
+  - name: "CPAM"
+    logo: assurance.png
+  - name: "Communauté d'agglomération de Melun Val de Seine"
+    logo: camvs.jpg
+  - name: "ANCT"
+    logo: anct.jpg
+  - name: "ARS"
+    logo: ars.svg
+  - name: "Font National Parentalité"
+    logo: reaap.jpg
+  - name: "Région IDF"
+    logo: region.png
+  - name: "MSA77"
+    logo: msa.jpg
 ---
 

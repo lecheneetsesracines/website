@@ -1,21 +1,13 @@
-import Image, { type ImageProps } from 'next/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
 
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
 import { Mail, Map, Phone } from '@/components/SocialIcons'
+import { type Financeur, loadFinanceurs } from '@/lib/financeurs'
 import { getPageContent } from '@/lib/pages'
 import { safeHref, safeMailto } from '@/lib/safeUrl'
-import logoAnct from '@/images/logos/anct.jpg'
-import logoAssurance from '@/images/logos/assurance.png'
-import logoCamvs from '@/images/logos/camvs.jpg'
-import logoMsa from '@/images/logos/msa.jpg'
-import logoCaf from '@/images/logos/caf.svg'
-import logoArs from '@/images/logos/ars.svg'
-import logoReaap from '@/images/logos/reaap.jpg'
-import logoCap from '@/images/logos/cap.jpg'
-import logoRegion from '@/images/logos/region.png'
 import image1 from '@/images/photos/image-1.jpg'
 import image2 from '@/images/photos/image-2.jpg'
 import image3 from '@/images/photos/image-3.jpg'
@@ -158,85 +150,43 @@ function ContactInfo({ data }: { data: ContactInfoData }) {
   )
 }
 
-interface Role {
-  company: string
-  title: string
-  logo: ImageProps['src']
-}
-
-function Role({ role }: { role: Role }) {
+function Role({ role }: { role: Financeur }) {
   return (
     <li className="flex gap-4">
       <div className="relative mt-1 flex h-16 w-16 flex-none items-center justify-center rounded-full ring-1 shadow-md shadow-amber-800/5 ring-amber-900/5 dark:border dark:border-zinc-700/50 dark:bg-amber-800 dark:ring-0">
-        <Image src={role.logo} alt="" className="h-14 w-14 rounded-full" />
+        <Image
+          src={role.logo.src}
+          width={role.logo.width}
+          height={role.logo.height}
+          alt=""
+          className="h-14 w-14 rounded-full"
+        />
       </div>
       <dl className="flex flex-auto flex-wrap items-center justify-center gap-x-2">
         <dt className="sr-only">Company</dt>
         <dd className="w-full flex-none text-sm font-medium text-amber-900 dark:text-amber-100">
-          {role.company}
+          {role.name}
         </dd>
       </dl>
     </li>
   )
 }
 
-function Resume({ intro }: { intro: string }) {
-  let resume: Array<Role> = [
-    {
-      company: "Caisse d'Allocations Familiales",
-      title: "Caisse d'Allocations Familiales",
-      logo: logoCaf,
-    },
-    {
-      company: "Cour d'appel de Paris",
-      title: "Cour d'appel de Paris",
-      logo: logoCap,
-    },
-    {
-      company: 'CPAM',
-      title: "Assurance Maladie, Caisse d'Allocations Familiales",
-      logo: logoAssurance,
-    },
-    {
-      company: "Communauté d'agglomération de Melun Val de Seine",
-      title:
-        'Caisse d’Allocations Familiales de Seine-et-Marne, Caisse d’Allocations Familiales',
-      logo: logoCamvs,
-    },
-    {
-      company: 'ANCT',
-      title: 'Agence Nationale de la Cohésion des Territoires',
-      logo: logoAnct,
-    },
-    {
-      company: 'ARS',
-      title: 'Agence Régionale de Santé',
-      logo: logoArs,
-    },
-    {
-      company: 'Font National Parentalité',
-      title: 'le Réseau d’Ecoute, d’Appui et d’Accompagnement des Parents',
-      logo: logoReaap,
-    },
-    {
-      company: 'Région IDF',
-      title: 'Région Île-de-France',
-      logo: logoRegion,
-    },
-    {
-      company: 'MSA77',
-      title:
-        "Mutualité Sociale Agricole de Seine-et-Marne, Caisse d'Allocations Familiales",
-      logo: logoMsa,
-    },
-  ]
-
+function Resume({
+  heading,
+  intro,
+  resume,
+}: {
+  heading: string
+  intro: string
+  resume: Array<Financeur>
+}) {
   return (
     <div className="rounded-2xl border border-zinc-300 p-6 dark:border-zinc-700/40">
       <div className="flex flex-col gap-2">
         <h2 className="flex text-sm font-semibold text-amber-900 dark:text-amber-100">
           <BriefcaseIcon className="h-6 w-6 flex-none" />
-          <span className="ml-3">Nos financeurs</span>
+          <span className="ml-3">{heading}</span>
         </h2>
         <span className="text-amber-900/60">{intro}</span>
       </div>
@@ -294,8 +244,11 @@ export default async function Home() {
     contactPhoneHref,
     contactEmailLabel,
     contactEmailHref,
+    financeursHeading,
     financeursIntro,
   } = homePage.data as Record<string, string | undefined>
+
+  let financeurs = await loadFinanceurs(homePage.data.financeurs)
 
   let contactInfo: ContactInfoData = {
     heading: contactHeading || 'Pour nous contacter',
@@ -350,7 +303,11 @@ export default async function Home() {
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
             <ContactInfo data={contactInfo} />
-            <Resume intro={financeursIntro || 'Tous nos services sont non payants et financés par les partenaires suivants :'} />
+            <Resume
+              heading={financeursHeading || 'Nos financeurs'}
+              intro={financeursIntro || 'Tous nos services sont non payants et financés par les partenaires suivants :'}
+              resume={financeurs}
+            />
           </div>
         </div>
       </Container>

@@ -38,11 +38,27 @@ Un site vitrine performant construit avec Next.js pour présenter l'association 
 - `npm run test:e2e` : construit le site sur le contenu figé `e2e/fixtures/content`, puis compare chaque page aux captures de référence de `e2e/__screenshots__/` (Playwright, Chromium, macOS). Le build laisse le contenu figé dans `.next` : relancez `npm run build` avant `npm run start` sur le vrai contenu.
 - `npm run test:e2e:update` : régénère les captures de référence. À réserver à un changement visuel voulu et validé.
 
+## Modifier les financeurs
+Le bloc « Nos financeurs » de la page d'accueil se modifie sans toucher au code, depuis l'éditeur web de GitHub :
+
+1. Pour ajouter un logo, ouvrez le dossier `content/logos/`, puis **Add file › Upload files**. Le nom du fichier ne contient que des lettres sans accents, des chiffres, `-`, `_` ou `.`, sans espace, et finit par `.svg`, `.png`, `.jpg`, `.jpeg`, `.webp`, `.gif` ou `.avif`. Par exemple : `mairie-melun.png`.
+2. Dans `content/pages/home.md`, ajoutez, retirez ou modifiez une entrée de la liste `financeurs`. Le site les affiche dans l'ordre de la liste :
+   ```yaml
+   financeurs:
+     - name: "Caisse d'Allocations Familiales"
+       logo: caf.svg
+   ```
+   Écrivez toujours le nom entre guillemets `"…"` : une apostrophe y est alors acceptée telle quelle.
+3. Le titre du bloc (`financeursHeading`) et sa phrase d'introduction (`financeursIntro`) se modifient dans le même fichier.
+
+Si une entrée n'a pas de nom ou pas de logo, ou si son logo n'existe pas dans `content/logos/`, la mise en ligne échoue avec un message qui nomme l'entrée fautive, et le site garde sa version précédente.
+
 ## Organisation du code
 - `src/app` contient les routes Next.js, dont la page d'accueil (`page.tsx`), l'index des sections et les sous-pages dédiées à chaque service.
 - `src/components` regroupe les composants partagés (layout, cartes, typographie, icônes).
-- `src/lib` rassemble les utilitaires côté serveur, notamment l'agrégation des contenus de sections.
-- `src/images` stocke les visuels locaux utilisés par la page d'accueil.
+- `src/lib` rassemble les utilitaires côté serveur, notamment l'agrégation des contenus de sections et la liste des financeurs.
+- `src/images` stocke les photos locales utilisées par la page d'accueil.
+- `content` contient le contenu édité par l'association : les pages (`content/pages`), les sections (`content/sections`) et les logos des financeurs (`content/logos`, servis sous `/logos/`).
 
 ## Déploiement
 Le projet est prêt pour une mise en production sur [Vercel](https://vercel.com/) ou tout environnement supportant Next.js 16 sur Node.js 24. Utilisez `npm run build` suivi de `npm run start` pour vérifier l'artefact avant déploiement.
