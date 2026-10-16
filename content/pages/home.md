@@ -26,7 +26,7 @@ financeurs:
     logo: anct.jpg
   - name: "ARS"
     logo: ars.svg
-  - name: "Font National Parentalité"
+  - name: "Fonds National Parentalité"
     logo: reaap.jpg
   - name: "Région IDF"
     logo: region.png
