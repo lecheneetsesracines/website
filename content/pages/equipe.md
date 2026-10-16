@@ -57,4 +57,4 @@ people:
     bio: 'stagiaire en Master2 de psychologie à l'université Sorbonne Paris Nord '
   - name: LERICE Joy
     role: Intervenante Espace de Rencontre
-    bio: 'stagiaire en Master2 de psychologie à l'université Sorbonne Paris Nord 'role: 
+    bio: 'stagiaire en Master2 de psychologie à l'université Sorbonne Paris Nord ' 
