@@ -12,7 +12,7 @@ Les valeurs fondatrices de l’association sont d’accueillir chacun dans le re
 
 Que ce soit suite à une ordonnance judiciaire de placement d’un enfant, ou d’un droit de visite pour un parent suite à un conflit, les professionnels de l’association s’adaptent aux spécificités judiciaires, besoins et caractéristiques de chaque famille pour favoriser l’évolution du lien enfant-parent. L’intervention se fait en co-construction avec les différents partenaires et dans le respect du cadre judiciaire permettant l’évolution la plus pertinente.
 
-## Règlement de fonctionnement
+## Extraits du règlement de fonctionnement
 
 - Toute personne accueillie l’est dans le respect de la dignité de sa personne (Loi du 2 janvier 2002, article L311-31 du CASF). Le centre garantit la confidentialité des échanges et des informations recueillies. Exceptionnellement, des notes d’information peuvent être transmises au juge et dans ce cas les familles sont tenues informées.
 - Afin de préserver la sécurité des personnes, il est expressément demandé de prendre connaissance et de se conformer aux consignes de sécurité affichées dans l’établissement.
